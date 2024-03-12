@@ -4,7 +4,7 @@
   <img src="../../../assets/img/ifnb-01.jpeg" class="img-fluid rounded float-end logo" alt="">
   <br>
   <h1>Herramienta Paramétrica Unión de Crédito General</h1>
-  <h3>Evaluación Crediticia</h3>
+  <h3>Calculadora PI</h3>
   <br>
   <form>
     <div class="row">
@@ -12,7 +12,7 @@
       <div class="col-12 col-lg-6">
         <!-- <br> -->
         <div class="form-group">
-          <label class="color1"><strong>Industria del crédito</strong></label>
+          <label class="color1"><strong>1. Industria del crédito</strong></label>
           <select class="form-select input-margin" name="indicador_a" [(ngModel)]="datosFormulario.indicador_a" required #a="ngModel">
             <option value="null" selected disabled>--Seleccioné la industria del crédito--</option>
             <option value="10">Construcción</option>
@@ -28,7 +28,7 @@
           </span>
         </div>
         <div class="form-group">
-          <label class="color1"><strong>¿Es actividad vulnerable?</strong></label>
+          <label class="color1"><strong>2. ¿Es actividad vulnerable?</strong></label>
           <select class="form-select input-margin" name="indicador_b" [(ngModel)]="datosFormulario.indicador_b" required #b="ngModel">
             <option value="null" selected disabled>--Indique la actividad--</option>
             <option value="10">Sí</option>
@@ -40,7 +40,7 @@
         </div>
   
         <div class="form-group">
-          <label class="color1"><strong>Municipio del crédito</strong></label>
+          <label class="color1"><strong>3. Municipio del crédito</strong></label>
           <select class="form-select input-margin" name="indicador_c" [(ngModel)]="datosFormulario.indicador_c" required #c="ngModel">
             <option value="null" selected disabled>--Seleccioné el municipio--</option>
             <option value="10">Puebla</option>
@@ -57,7 +57,7 @@
         <label class="color2">*Información de las Sociedades de Información Crediticia</label>
   
         <div class="form-group">
-          <label class="color1"><strong>Total de créditos con los que cuenta el intermediario</strong></label>
+          <label class="color1"><strong>4. Total de créditos con los que cuenta el intermediario</strong></label>
           <input type="number" class="form-control input-margin" name="indicador_d" [(ngModel)]="datosFormulario.indicador_d" required #d="ngModel">
           <span class="input_error" *ngIf="d.invalid && d.touched">
             ** El total de créditos es requerido
@@ -65,7 +65,7 @@
         </div>
   
         <div class="form-group">
-          <label class="color1"><strong>Días de atraso que presenta en buró el acreditado</strong></label>
+          <label class="color1"><strong>5. Días de atraso que presenta en buró el acreditado</strong></label>
           <select class="form-select input-margin" name="indicador_e" [(ngModel)]="datosFormulario.indicador_e" required #e="ngModel">
             <option value="null" selected disabled>--Indique los días--</option>
             <option value="10">No tiene atrasos</option>
@@ -79,7 +79,7 @@
 
         <label class="color2">*Datos del acreditado</label>
         <div class="form-group">
-          <label class="color1"><strong>Monto de ventas ($)</strong></label>
+          <label class="color1"><strong>6. Monto de ventas ($)</strong></label>
           <div class="input-group">
             <span class="input-group-text">$</span>
             <input type="number" class="form-control input-margin" name="indicador_f" [(ngModel)]="datosFormulario.indicador_f" required #f="ngModel">
@@ -94,7 +94,7 @@
       <div class="col-12  col-lg-6">
 
         <div class="form-group">
-          <label class="color1"><strong>Antigüedad de la empresa (en meses)</strong></label>
+          <label class="color1"><strong>7. Antigüedad de la empresa (en meses)</strong></label>
           <input type="number" class="form-control input-margin" name="indicador_g" [(ngModel)]="datosFormulario.indicador_g" required #g="ngModel">
           <span class="input_error" *ngIf="g.invalid && g.touched">
             ** La antigüedad de la empresa es requerido
@@ -102,7 +102,7 @@
         </div>
 
         <div class="form-group">
-          <label class="color1"><strong>Margen Financiero (%)</strong></label>
+          <label class="color1"><strong>8. Margen Financiero (%)</strong></label>
           <div class="input-group">
             <input type="number" class="form-control input-margin" name="indicador_h" [(ngModel)]="datosFormulario.indicador_h" required #h="ngModel">
             <span class="input-group-text">%</span>
@@ -113,7 +113,7 @@
         </div>
         <!-- <br> -->
         <div class="form-group">
-          <label class="color1"><strong>ROA (%)</strong></label>
+          <label class="color1"><strong>9. ROA (%)</strong></label>
           <div class="input-group">
             <input type="number" class="form-control input-margin" name="indicador_i" [(ngModel)]="datosFormulario.indicador_i" required #i="ngModel">
             <span class="input-group-text">%</span>
@@ -124,7 +124,7 @@
         </div>
         <br>
         <div class="form-group">
-          <label class="color1"><strong>Severidad de la Pérdida (%)</strong></label>
+          <label class="color1"><strong>10. Severidad de la Pérdida (%)</strong></label>
           <div class="input-group">
             <input type="number" class="form-control input-margin" name="indicador_k" [(ngModel)]="datosFormulario.indicador_k" required #k="ngModel">
             <span class="input-group-text">%</span>
@@ -135,7 +135,7 @@
         </div>
 
         <div class="form-group">
-          <label class="color1"><strong>Tipo de crédito</strong></label>
+          <label class="color1"><strong>11. Tipo de crédito</strong></label>
           <select class="form-select input-margin" name="indicador_l" [(ngModel)]="datosFormulario.indicador_l" required #l="ngModel">
             <option value="null" selected disabled>--Seleccioné el tipo de crédito--</option>
             <option value="10">No Revolvente</option>

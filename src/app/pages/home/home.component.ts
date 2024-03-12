@@ -88,21 +88,22 @@ export class HomeComponent {
 
   btnEvaluar() {
     if (this.validarCampos()) {
-      this.mostrarDetalles = true;
       this.local.isloader = true;
+      this.mostrarDetalles = true;
       this.respuesta();
       this.alert = false;
     } else {
       this.alert = true;
+      setTimeout(() => {
+        this.bottom.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, this.delayTime);
     }
-    setTimeout(() => {
-      this.bottom.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }, this.delayTime);
   }
 
   private respuesta(){
     this.data.getData(this.datosFormulario).subscribe({next:(rsp)=>{
       this.local.isloader = false;
+      this.bottom.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
       console.log(rsp);
       this.respuestaData = rsp;
     }});
