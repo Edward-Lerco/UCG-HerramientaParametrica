@@ -8,6 +8,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoaderComponent } from './loader/loader.component';
+import { NgxCurrencyModule } from 'ngx-currency';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { LoaderComponent } from './loader/loader.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxCurrencyModule
   ],
   providers: [],
   bootstrap: [AppComponent]

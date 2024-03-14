@@ -1,7 +1,11 @@
+.fondo{
+  padding-left: 5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-right: 5%;
+}
 .container {
   background-color: #ffffff;
-  // margin-top: 2%;
-  // margin-bottom: 2%;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 50px rgba(64,43,87, 255);
@@ -24,9 +28,6 @@ h3 {
 .input-margin {
   border: 1px solid #402b57;
 }
-.aling-left{
-  text-align: left;
-}
 .d-grid{
   margin-top: 12%;
 }
@@ -40,3 +41,12 @@ h3 {
   display: block;
   margin: 0 auto;
 }
+.boton-grup {
+  background-color: #3bbac5;
+  color: black;
+  cursor: pointer;
+  }
+  .boton-grup:hover {
+  background-color: #402b57;
+  color: white;
+  }

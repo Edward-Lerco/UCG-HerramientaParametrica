@@ -143,4 +143,32 @@ export class HomeComponent {
     };
     this.camposInvalidos.clear();
   }
+
+  getVariableName(attribute: string): string {
+    const variableNames: { [key: string]: string } = {
+      'indicador_a': 'Indique la industria del crédito',
+      'indicador_b': '¿Es actividad vulnerable?',
+      'indicador_c': 'Municipio del crédito',
+      'indicador_d': 'Días de atraso que presenta en buró el acreditado',
+      'indicador_e': 'Monto de ventas',
+      'indicador_f': 'Antigüedad de la empresa',
+      'indicador_g': 'Margen Financiero',
+      'indicador_h': 'ROA',
+      'indicador_i': 'Tipo de crédito',
+    };
+  
+    if (variableNames.hasOwnProperty(attribute)) {
+      return variableNames[attribute];
+    } else {
+      return attribute;
+    }
+  }
+
+  sumaBeta(): number {
+    return this.respuestaData.resultado.items.reduce((acc, item) => acc + item.beta, 0);
+  }
+
+  sumaPuntuaje(): number {
+    return this.respuestaData.resultado.items.reduce((acc, item) => acc + item.puntuaje, 0);
+  }
 }

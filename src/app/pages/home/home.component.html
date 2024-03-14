@@ -1,196 +1,210 @@
 <app-loader></app-loader>
-<div class="container" #bottom>
-  <img src="../../../assets/img/UCG-01-1.jpg" class="img-fluid rounded float-start logo" alt="">
-  <img src="../../../assets/img/ifnb-01.jpeg" class="img-fluid rounded float-end logo" alt="">
-  <br>
-  <h1>Herramienta Paramétrica Unión de Crédito General</h1>
-  <h3>Calculadora PI</h3>
-  <br>
-  <form>
-    <div class="row">
-
-      <div class="col-12 col-lg-6">
-        <!-- <br> -->
-        <div class="form-group">
-          <label class="color1"><strong>1. Industria del crédito</strong></label>
-          <select class="form-select input-margin" name="indicador_a" [(ngModel)]="datosFormulario.indicador_a" required #a="ngModel">
-            <option value="null" selected disabled>--Seleccioné la industria del crédito--</option>
-            <option value="10">Construcción</option>
-            <option value="20">Textil</option>
-            <option value="30">Comercio</option>
-            <option value="40">Agropecuario</option>
-            <option value="50">Servicios</option>
-            <option value="60">Industria</option>
-            <option value="70">Otro</option>
-          </select>
-          <span class="input_error" *ngIf="a.invalid && a.touched">
-            ** La industria del crédito es requerido
-          </span>
-        </div>
-        <div class="form-group">
-          <label class="color1"><strong>2. ¿Es actividad vulnerable?</strong></label>
-          <select class="form-select input-margin" name="indicador_b" [(ngModel)]="datosFormulario.indicador_b" required #b="ngModel">
-            <option value="null" selected disabled>--Indique la actividad--</option>
-            <option value="10">Sí</option>
-            <option value="20">No</option>
-          </select>
-          <span class="input_error" *ngIf="b.invalid && b.touched">
-            ** Campo requerido
-          </span>
-        </div>
-  
-        <div class="form-group">
-          <label class="color1"><strong>3. Municipio del crédito</strong></label>
-          <select class="form-select input-margin" name="indicador_c" [(ngModel)]="datosFormulario.indicador_c" required #c="ngModel">
-            <option value="null" selected disabled>--Seleccioné el municipio--</option>
-            <option value="10">Puebla</option>
-            <option value="20">Querétaro</option>
-            <option value="30">San Andrés Cholula</option>
-            <option value="40">San Pedro Cholula</option>
-            <option value="50">Otro</option>
-          </select>
-          <span class="input_error" *ngIf="c.invalid && c.touched">
-            ** El municipio del crédito es requerido
-          </span>
-        </div>
-  
-        <label class="color2">*Información de las Sociedades de Información Crediticia</label>
-  
-        <div class="form-group">
-          <label class="color1"><strong>4. Total de créditos con los que cuenta el intermediario</strong></label>
-          <input type="number" class="form-control input-margin" name="indicador_d" [(ngModel)]="datosFormulario.indicador_d" required #d="ngModel">
-          <span class="input_error" *ngIf="d.invalid && d.touched">
-            ** El total de créditos es requerido
-          </span>
-        </div>
-  
-        <div class="form-group">
-          <label class="color1"><strong>5. Días de atraso que presenta en buró el acreditado</strong></label>
-          <select class="form-select input-margin" name="indicador_e" [(ngModel)]="datosFormulario.indicador_e" required #e="ngModel">
-            <option value="null" selected disabled>--Indique los días--</option>
-            <option value="10">No tiene atrasos</option>
-            <option value="20">Hasta 30 días de atraso</option>
-            <option value="30">Más de 30 días de atraso</option>
-          </select>
-          <span class="input_error" *ngIf="e.invalid && e.touched">
-            ** Campo requerido
-          </span>
-        </div>
-
-        <label class="color2">*Datos del acreditado</label>
-        <div class="form-group">
-          <label class="color1"><strong>6. Monto de ventas ($)</strong></label>
-          <div class="input-group">
-            <span class="input-group-text">$</span>
-            <input type="number" class="form-control input-margin" name="indicador_f" [(ngModel)]="datosFormulario.indicador_f" required #f="ngModel">
-          </div>
-          <span class="input_error" *ngIf="f.invalid && f.touched">
-            ** El monto de ventas es requerido
-          </span>
-        </div>
-
-      </div>
-
-      <div class="col-12  col-lg-6">
-
-        <div class="form-group">
-          <label class="color1"><strong>7. Antigüedad de la empresa (en meses)</strong></label>
-          <input type="number" class="form-control input-margin" name="indicador_g" [(ngModel)]="datosFormulario.indicador_g" required #g="ngModel">
-          <span class="input_error" *ngIf="g.invalid && g.touched">
-            ** La antigüedad de la empresa es requerido
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="color1"><strong>8. Margen Financiero (%)</strong></label>
-          <div class="input-group">
-            <input type="number" class="form-control input-margin" name="indicador_h" [(ngModel)]="datosFormulario.indicador_h" required #h="ngModel">
-            <span class="input-group-text">%</span>
-          </div>
-          <span class="input_error" *ngIf="h.invalid && h.touched">
-            ** El margen Financiero es requerido
-          </span>
-        </div>
-        <!-- <br> -->
-        <div class="form-group">
-          <label class="color1"><strong>9. ROA (%)</strong></label>
-          <div class="input-group">
-            <input type="number" class="form-control input-margin" name="indicador_i" [(ngModel)]="datosFormulario.indicador_i" required #i="ngModel">
-            <span class="input-group-text">%</span>
-          </div>
-          <span class="input_error" *ngIf="i.invalid && i.touched">
-            ** ROA requerido
-          </span>
-        </div>
-        <br>
-        <div class="form-group">
-          <label class="color1"><strong>10. Severidad de la Pérdida (%)</strong></label>
-          <div class="input-group">
-            <input type="number" class="form-control input-margin" name="indicador_k" [(ngModel)]="datosFormulario.indicador_k" required #k="ngModel">
-            <span class="input-group-text">%</span>
-          </div>
-          <span class="input_error" *ngIf="k.invalid && k.touched">
-            ** La severidad de la Pérdida es requerida
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="color1"><strong>11. Tipo de crédito</strong></label>
-          <select class="form-select input-margin" name="indicador_l" [(ngModel)]="datosFormulario.indicador_l" required #l="ngModel">
-            <option value="null" selected disabled>--Seleccioné el tipo de crédito--</option>
-            <option value="10">No Revolvente</option>
-            <option value="20">TDC y otros créditos revolventes</option>
-            <option value="30">Hipotecario y vivienda</option>
-            <option value="40">Comercial</option>
-          </select>
-          <span class="input_error" *ngIf="l.invalid && l.touched">
-            ** El tipo de crédito es requerido
-          </span>
-        </div>
-
-        <div class="d-grid">
-          <button 
-            class="boton-style1" 
-            type="button" 
-            (click)="btnEvaluar()">
-            Evaluar
-          </button>
-        </div>
-      </div>
-    </div>
+<div class="fondo" #bottom>
+  <div class="container">
+    <img src="../../../assets/img/UCG-01-1.jpg" class="img-fluid rounded float-start logo" alt="">
+    <img src="../../../assets/img/ifnb-01.jpeg" class="img-fluid rounded float-end logo" alt="">
     <br>
-    <div class="collapse" [ngClass]="{'show' : alert}">
-      <div class="alert alert-danger text-center" role="alert">
-        <i class="bi bi-exclamation-triangle margin-icon"></i>
-        <label>
-          ¡Todos los campos son obligatorios!
-        </label>
-      </div>
-    </div>
-  </form>
+    <h1>Herramienta Paramétrica Unión de Crédito General</h1>
+    <h3>Calculadora PI</h3>
+    <br>
+    <form>
+      <div class="row">
+  
+        <div class="col-12 col-lg-6">
+          <!-- <br> -->
+          <div class="form-group">
+            <label class="color1"><strong>1. Industria del crédito</strong></label>
+            <select class="form-select input-margin" name="indicador_a" [(ngModel)]="datosFormulario.indicador_a" required #a="ngModel">
+              <option value="null" selected disabled>--Seleccioné la industria del crédito--</option>
+              <option value="10">Construcción</option>
+              <option value="20">Textil</option>
+              <option value="30">Comercio</option>
+              <option value="40">Agropecuario</option>
+              <option value="50">Servicios</option>
+              <option value="60">Industria</option>
+              <option value="70">Otro</option>
+            </select>
+            <span class="input_error" *ngIf="a.invalid && a.touched">
+              ** La industria del crédito es requerido
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="color1"><strong>2. ¿Es actividad vulnerable?</strong></label>
+            <select class="form-select input-margin" name="indicador_b" [(ngModel)]="datosFormulario.indicador_b" required #b="ngModel">
+              <option value="null" selected disabled>--Indique la actividad--</option>
+              <option value="10">Sí</option>
+              <option value="20">No</option>
+            </select>
+            <span class="input_error" *ngIf="b.invalid && b.touched">
+              ** Campo requerido
+            </span>
+          </div>
+    
+          <div class="form-group">
+            <label class="color1"><strong>3. Municipio del crédito</strong></label>
+            <select class="form-select input-margin" name="indicador_c" [(ngModel)]="datosFormulario.indicador_c" required #c="ngModel">
+              <option value="null" selected disabled>--Seleccioné el municipio--</option>
+              <option value="10">Puebla</option>
+              <option value="20">Querétaro</option>
+              <option value="30">San Andrés Cholula</option>
+              <option value="40">San Pedro Cholula</option>
+              <option value="50">Otro</option>
+            </select>
+            <span class="input_error" *ngIf="c.invalid && c.touched">
+              ** El municipio del crédito es requerido
+            </span>
+          </div>
+    
+          <label class="color2">*Información de las Sociedades de Información Crediticia</label>
+    
+          <div class="form-group">
+            <label class="color1"><strong>4. Total de créditos con los que cuenta el intermediario</strong></label>
+            <input type="number" class="form-control input-margin" name="indicador_d" [(ngModel)]="datosFormulario.indicador_d" required #d="ngModel">
+            <span class="input_error" *ngIf="d.invalid && d.touched">
+              ** El total de créditos es requerido
+            </span>
+          </div>
+    
+          <div class="form-group">
+            <label class="color1"><strong>5. Días de atraso que presenta en buró el acreditado</strong></label>
+            <select class="form-select input-margin" name="indicador_e" [(ngModel)]="datosFormulario.indicador_e" required #e="ngModel">
+              <option value="null" selected disabled>--Indique los días--</option>
+              <option value="10">No tiene atrasos</option>
+              <option value="20">Hasta 30 días de atraso</option>
+              <option value="30">Más de 30 días de atraso</option>
+            </select>
+            <span class="input_error" *ngIf="e.invalid && e.touched">
+              ** Campo requerido
+            </span>
+          </div>
+  
+          <label class="color2">*Datos del acreditado</label>
 
-  <div class="collapse" [ngClass]="{'show': mostrarDetalles}">
+          <div class="form-group">
+            <label class="color1"><strong>6. Monto de ventas ($)</strong></label>
+
+            <div class="input-group">
+              <!-- <span class="input-group-text">$</span> -->
+              <input type="number" class="form-control input-margin" name="indicador_f" [(ngModel)]="datosFormulario.indicador_f" required #f="ngModel">
+
+            </div>
+
+            <span class="input_error" *ngIf="f.invalid && f.touched">
+              ** El monto de ventas es requerido
+            </span>
+          </div>
+  
+        </div>
+  
+
+
+
+        <div class="col-12  col-lg-6">
+  
+          <div class="form-group">
+            <label class="color1"><strong>7. Antigüedad de la empresa (en meses)</strong></label>
+            <input type="number" class="form-control input-margin" name="indicador_g" [(ngModel)]="datosFormulario.indicador_g" required #g="ngModel">
+            <span class="input_error" *ngIf="g.invalid && g.touched">
+              ** La antigüedad de la empresa es requerido
+            </span>
+          </div>
+  
+          <div class="form-group">
+            <label class="color1"><strong>8. Margen Financiero (%)</strong></label>
+            <div class="input-group">
+              <input type="text" class="form-control input-margin" name="indicador_h" [(ngModel)]="datosFormulario.indicador_h" required #h="ngModel" >
+              <!-- <span class="input-group-text">%</span> -->
+            </div>
+            <span class="input_error" *ngIf="h.invalid && h.touched">
+              ** El margen Financiero es requerido
+            </span>
+          </div>
+          <!-- <br> -->
+          <div class="form-group">
+            <label class="color1"><strong>9. ROA (%)</strong></label>
+            <div class="input-group">
+              <input type="number" class="form-control input-margin" name="indicador_i" [(ngModel)]="datosFormulario.indicador_i" required #i="ngModel">
+              <span class="input-group-text">%</span>
+            </div>
+            <span class="input_error" *ngIf="i.invalid && i.touched">
+              ** ROA requerido
+            </span>
+          </div>
+          <br>
+          <div class="form-group">
+            <label class="color1"><strong>10. Severidad de la Pérdida (%)</strong></label>
+            <div class="input-group">
+              <input type="number" class="form-control input-margin" name="indicador_k" [(ngModel)]="datosFormulario.indicador_k" required #k="ngModel">
+              <span class="input-group-text">%</span>
+            </div>
+            <span class="input_error" *ngIf="k.invalid && k.touched">
+              ** La severidad de la Pérdida es requerida
+            </span>
+          </div>
+  
+          <div class="form-group">
+            <label class="color1"><strong>11. Tipo de crédito</strong></label>
+            <select class="form-select input-margin" name="indicador_l" [(ngModel)]="datosFormulario.indicador_l" required #l="ngModel">
+              <option value="null" selected disabled>--Seleccioné el tipo de crédito--</option>
+              <option value="10">No Revolvente</option>
+              <option value="20">TDC y otros créditos revolventes</option>
+              <option value="30">Hipotecario y vivienda</option>
+              <option value="40">Comercial</option>
+            </select>
+            <span class="input_error" *ngIf="l.invalid && l.touched">
+              ** El tipo de crédito es requerido
+            </span>
+          </div>
+  
+          <div class="d-grid">
+            <button 
+              class="boton-style1" 
+              type="button" 
+              (click)="btnEvaluar()">
+              Evaluar
+            </button>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="collapse" [ngClass]="{'show' : alert}">
+        <div class="alert alert-danger text-center" role="alert">
+          <i class="bi bi-exclamation-triangle margin-icon"></i>
+          <label>
+            ¡Todos los campos son obligatorios!
+          </label>
+        </div>
+      </div>
+    </form>  
+  </div>
+  <br><br>
+
+  <div class="container collapse" [ngClass]="{'show': mostrarDetalles}">
     <div class="card mb-3" >
       <div class="card-header d-flex">
         <button class="btn-close ms-auto" (click)="ocultarCard()"></button>
       </div>
       <div class="row g-0">
+
         <div class="col-12 col-lg-4">
           <div class="card-body">
             <div class="list-group">
               <div class="list-group-item">
                 <h5 class="mb-1">Ejecutivo de negocios:</h5>
                 <p class="mb-1">Nombre</p>
+                <input type="text" class="form-control">
               </div>
               <div class="list-group-item">
                 <h5 class="mb-1">Prospecto:</h5>
                 <p class="mb-1">Nombre</p>
+                <input type="text" class="form-control">
                 <p class="mb-1">Email</p>
-                <p class="mb-1">Teléfono</p>
+                <input type="text" class="form-control">
               </div>
             </div>
           </div>
         </div>
+
         <div class="col-12 col-lg-8">
           <div class="card-body">
             <div class="table-responsive">
@@ -218,13 +232,46 @@
             </div>
           </div>
         </div>
+        
       </div>
+
       <div class="card-footer text-center">
-        <button type="button" class="mx-auto boton-style1" data-bs-toggle="modal" data-bs-target="#modal">
-          Tabla de porcentaje de reservas preventivas
-        </button>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn boton-grup" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Tabla de puntaje</button>
+          <button type="button" class="btn boton-grup" data-bs-toggle="modal" data-bs-target="#modal">Tabla de porcentaje</button>
+        </div>
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <div class="card-body table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">VARIABLE</th>
+                    <th scope="col">BETA</th>
+                    <th scope="col">PUNTAJE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of respuestaData.resultado.items">
+                    <td>{{getVariableName(item.attribute)}}</td>
+                    <td>{{item.beta}}</td>
+                    <td>{{item.puntuaje}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Total</strong></td>
+                    <td>{{sumaBeta()}}</td>
+                    <td>{{sumaPuntuaje()}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+
+
     <div class="modal fade" id="modal">
       <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -238,4 +285,6 @@
       </div>
     </div>
   </div>
+
+
 </div>
