@@ -1,7 +1,11 @@
-.container {
+.fondo{
+  padding-left: 4%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-right: 4%;
+}
+.content {
   background-color: #ffffff;
-  // margin-top: 2%;
-  // margin-bottom: 2%;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 50px rgba(64,43,87, 255);
@@ -12,23 +16,32 @@
 h1 {
   color: #3bbac5;
   text-align: center;
+}
+.h1-margin{
   margin-top: 50px;
 }
 h3 {
+  margin-left: 4%;
   margin-top: 5%;
   color: #3e597b;
 }
+label{
+  font-size: 20px;
+}
 .form-group {
-  margin-bottom: 5%;
+  margin-bottom: 3%;
+}
+.form-group1 {
+  margin-top: 4%;
+}
+.row1{
+  margin-top: 3%;
 }
 .input-margin {
   border: 1px solid #402b57;
 }
-.aling-left{
-  text-align: left;
-}
 .d-grid{
-  margin-top: 12%;
+  margin-top: 1%;
 }
 .margin-icon{
   margin-right: 1%;
@@ -39,4 +52,18 @@ h3 {
   height: auto;
   display: block;
   margin: 0 auto;
+}
+.icon{
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+.flex {
+  display: flex;
+}
+.boton-margin{
+  margin-top: 1.4%;
+}
+.myBorder{
+  border-bottom: 2px solid #3bbac5;
 }

@@ -1,4 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+// Loader
 .overlay{
     position:fixed;
     width:100%;
@@ -8,40 +16,39 @@
     display:flex;
     align-items:center;
     justify-content:center;
-   }
-.background{
-    background-image: url('assets/img/Fondo-UCG.jpg');
-    background-size: cover;
-    background-position: center;
 }
+
+
 .input_error{
-color: red;
+    color: red;
 }
 .boton-style1 {
-background-color: #3bbac5;
-color: black;
-border: none;
-padding: 10px 20px;
-border-radius: 5px;
-cursor: pointer;
+    background-color: #3bbac5;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .boton-style1:hover {
-background-color: #402b57;
-color: white;
+    background-color: #402b57;
+    color: white;
 }
 .boton-style2 {
-background-color: #402b57;
-color: #fff;
-border: none;
-padding: 10px 20px;
-border-radius: 3px;
-cursor: pointer;
+    background-color: #402b57;
+    color: #fff;
+    width: 100%;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .boton-style2:hover {
-background-color: #3bbac5;
+    background-color: #3bbac5;
+    color: black;
 }
 .color1{
-color: #402b57;
+    color: #402b57;
 }
 .color2{
     color: #3bbac5;
