@@ -41,6 +41,7 @@ import { DropdownModule } from 'primeng/dropdown';
     AccordionModule,
     DialogModule,
     InputNumberModule,
+    
     DropdownModule
   ],
   providers: [],

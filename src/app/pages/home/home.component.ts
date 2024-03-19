@@ -76,6 +76,8 @@ export class HomeComponent implements OnInit {
   indicador_i!: indicadores[]; 
   indicador_k!: indicadores[]; 
   indicador_l!: indicadores[];
+  totalBeta: number = 0;
+  totalPuntaje: number = 0;
 
 
   respuestaData: Respuesta = {
@@ -135,10 +137,10 @@ export class HomeComponent implements OnInit {
     ]
 
     this.indicador_d = [
-      { name: '0',                        code: '0',           beta: '1.69',  puntaje: '40',  icon:'assets/icons/igual.png'},
-      { name: 'Mayor a 0 pero Menor o igual a 2', code: '1',   beta: '-0.93', puntaje: '116', icon:'assets/icons/menor-igual.png'},
-      { name: 'Mayor a 2 pero Menor o igual a 5', code: '3',   beta: '1.83',  puntaje: '36',  icon:'assets/icons/menor-igual.png'},
-      { name: 'Mayor a 5',                code: '5',           beta: '1.99',  puntaje: '32',  icon:'assets/icons/mayor.png'},
+      { name: '0 créditos',                        code: '0',           beta: '1.69',  puntaje: '40',  icon:'assets/icons/creditos.png'},
+      { name: 'De 1 a 2 créditos', code: '1',   beta: '-0.93', puntaje: '116', icon:'assets/icons/creditos.png'},
+      { name: 'De 3 a 5 créditos', code: '3',   beta: '1.83',  puntaje: '36',  icon:'assets/icons/creditos.png'},
+      { name: 'Mayor a 5 créditos',                code: '5',           beta: '1.99',  puntaje: '32',  icon:'assets/icons/creditos.png'},
     ];
     this.indicador_e = [
       { name: 'No tiene atrasos',         code: '10',          beta: '-0.87', puntaje: '114', icon:'assets/icons/no-atraso.png'},
@@ -147,13 +149,13 @@ export class HomeComponent implements OnInit {
     ]
     this.indicador_f = [
       { name: 'Menor a $5,000,000',       code: '4900000',     beta: '0.25',  puntaje: '82',  icon:'assets/icons/monto1.png'},
-      { name: 'Mayor o igual a $5,000,000 pero Menor o igual a $25,000,000',  code: '24000000', beta: '0.74', puntaje: '68', icon:'assets/icons/monto2.png'},
-      { name: 'Mayor a $25,000,000 pero Menor o igual a $100,000,000',        code: '50000000', beta: '0',    puntaje: '89', icon:'assets/icons/monto3.png'},
+      { name: 'De $5,000,000 a $25,000,000',  code: '24000000', beta: '0.74', puntaje: '68', icon:'assets/icons/monto2.png'},
+      { name: 'De $26,000,000 a $100,000,000',        code: '50000000', beta: '0',    puntaje: '89', icon:'assets/icons/monto3.png'},
       { name: 'Mayor a $100,000,000',      code: '110000000',  beta: '-2.26', puntaje: '154', icon:'assets/icons/monto4.png'},
     ]
     this.indicador_g = [
-      { name: 'Menor o igual a 12 meses',  code: '11',         beta: '0.56',  puntaje: '73',  icon:'assets/icons/antiguedad1.png'},
-      { name: 'Mayor a 12 meses pero Menor o igual a 36 meses',               code: '30',       beta: '0',    puntaje: '89', icon:'assets/icons/antiguedad1.png'},
+      { name: 'De 0 a 12 meses',  code: '11',         beta: '0.56',  puntaje: '73',  icon:'assets/icons/antiguedad1.png'},
+      { name: 'De 13 a 36 meses',               code: '30',       beta: '0',    puntaje: '89', icon:'assets/icons/antiguedad1.png'},
       { name: 'Mayor a 36 meses',          code: '37',         beta: '-0.07', puntaje: '91',  icon:'assets/icons/antiguedad1.png'},
     ]
     this.indicador_h = [
@@ -161,9 +163,9 @@ export class HomeComponent implements OnInit {
       { name: 'Mayor a 1%',                code: '2',          beta: '0',     puntaje: '89',  icon:'assets/icons/mayor.png'},
     ]
     this.indicador_i = [
-      { name: 'Menor o igual a 1%',        code: '0',          beta: '0.96',  puntaje: '61',  icon:'assets/icons/menor-igual.png'},
-      { name: 'Mayor a 1% pero Menor o igual a 7%', code: '4', beta: '0.61',  puntaje: '71',  icon:'assets/icons/menor-igual.png'},
-      { name: 'Mayor a 7%',                code: '8',          beta: '0',     puntaje: '89',  icon:'assets/icons/mayor.png'},
+      { name: 'Del 0% al 1%',        code: '0',          beta: '0.96',  puntaje: '61',  icon:'assets/icons/menor-igual.png'},
+      { name: 'Del 1.1% al 7%', code: '4', beta: '0.61',  puntaje: '71',  icon:'assets/icons/mayor-igual.png'},
+      { name: 'Mayor al 7%',                code: '8',          beta: '0',     puntaje: '89',  icon:'assets/icons/mayor.png'},
     ]
     this.indicador_k = [
       { name: '10%',                       code: '10' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
@@ -186,10 +188,10 @@ export class HomeComponent implements OnInit {
 
   }
 
-  getIndicadorValue(controlName: string): string {
-    const control = this.calculatorForm.get(controlName);
-    return control && control.value ? control.value['name'] : '';
-  }
+  // getIndicadorValue(controlName: string): string {
+  //   const control = this.calculatorForm.get(controlName);
+  //   return control && control.value ? control.value['name'] : '';
+  // }
 
   getIndicadorBeta(controlName: string): string {
     const control = this.calculatorForm.get(controlName);
@@ -217,9 +219,21 @@ export class HomeComponent implements OnInit {
         indicador_l: Number(this.calculatorForm.controls['indicador_l'].value['code'])
       };
       this.local.isloader = true;
-      this.mostrarDetalles = true;
-      this.respuesta(body);
       this.alert = false;
+      this.mostrarDetalles = true;
+      this.respuesta(body);      
+
+      this.totalBeta = 0;
+      this.totalPuntaje = 0;
+      for (const controlName in this.calculatorForm.controls) {
+        if (this.calculatorForm.controls.hasOwnProperty(controlName)) {
+          const control = this.calculatorForm.controls[controlName];
+          const beta = Number(control.value['beta']);
+          const puntaje = Number(control.value['puntaje']);
+          if (!isNaN(beta)) this.totalBeta += beta;
+          if (!isNaN(puntaje)) this.totalPuntaje += puntaje;
+        }
+      }
     } else {
       this.alert = true;
       setTimeout(() => {
@@ -227,6 +241,7 @@ export class HomeComponent implements OnInit {
       this.delayTime});
     }
   }
+
 
   private respuesta(body: DatosFormulario){
     this.data.getData(body).subscribe({
@@ -239,6 +254,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  reservas(){
+    
+  }
+
   ocultarCard() {
     this.mostrarDetalles = false;
     this.calculatorForm.reset();
@@ -247,34 +266,6 @@ export class HomeComponent implements OnInit {
 
   showDialog() {
     this.visible = true;
-  }
-
-  getVariableName(attribute: string): string {
-    const variableNames: { [key: string]: string } = {
-      'indicador_a': 'Indique la industria del crédito',
-      'indicador_b': '¿Es actividad vulnerable?',
-      'indicador_c': 'Municipio del crédito',
-      'indicador_d': 'Días de atraso que presenta en buró el acreditado',
-      'indicador_e': 'Monto de ventas',
-      'indicador_f': 'Antigüedad de la empresa',
-      'indicador_g': 'Margen Financiero',
-      'indicador_h': 'ROA',
-      'indicador_i': 'Tipo de crédito',
-    };
-  
-    if (variableNames.hasOwnProperty(attribute)) {
-      return variableNames[attribute];
-    } else {
-      return attribute;
-    }
-  }
-
-  sumaBeta(): number {
-    return this.respuestaData.resultado.items.reduce((acc, item) => acc + item.beta, 0);
-  }
-
-  sumaPuntuaje(): number {
-    return this.respuestaData.resultado.items.reduce((acc, item) => acc + item.puntuaje, 0);
   }
   
 }
