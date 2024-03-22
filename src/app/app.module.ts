@@ -42,7 +42,7 @@ import { DropdownModule } from 'primeng/dropdown';
     DialogModule,
     InputNumberModule,
     
-    DropdownModule
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

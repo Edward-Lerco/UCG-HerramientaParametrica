@@ -4,8 +4,8 @@
     <img src="../../../assets/img/UCG-01-1.jpg" class="img-fluid rounded float-start logo">
     <img src="../../../assets/img/ifnb-01.jpeg" class="img-fluid rounded float-end logo">
     <br>
-    <h1 class="h1-margin"><strong>Herramienta Paramétrica</strong></h1>
-    <h1><strong>Unión de Crédito General</strong></h1>
+    <h1 class="animate__animated animate__jackInTheBox animate__slow h1-margin"><strong>Herramienta Paramétrica</strong></h1>
+    <h1 class="animate__animated animate__jackInTheBox animate__slow"><strong>Unión de Crédito General</strong></h1>
     <h3><strong>Calculadora PI</strong></h3>
     <br>
     <form [formGroup]="calculatorForm" (ngSubmit)="btnEvaluar()">
@@ -15,44 +15,49 @@
           <div class="row">
 
             <div class="col-12 col-sm-9">
+
               <label class="color1"><strong>1. Industria del crédito</strong></label>
               <div class="p-fluid">
-  
-                <p-dropdown placeholder="--Seleccione una opción--" [showClear]="true" formControlName="indicador_a" [options]="indicador_a" optionLabel="name">
+                <p-dropdown id="boton" placeholder="--Seleccione una opción--" formControlName="indicador_a" [options]="indicador_a" optionLabel="name">
                   <ng-template let-option pTemplate="selectedItem">
                     <div class="flex gap-2" *ngIf="option">
-                        <img src="{{ option.icon }}" class="icon">
-                        <div class="text">{{ option.name }}</div>
+                      <img src="{{ option.icon }}" class="icon">
+                      <div class="text">{{ option.name }}</div>
                     </div>
                   </ng-template>
                   <ng-template let-option pTemplate="item">
-                    <div class="flex  gap-2">
-                            <img src="{{ option.icon }}" class="icon"/>
-                            <div class="text">{{ option.name }}</div>
-                        </div>
+                    <div class="flex gap-2">
+                      <img src="{{ option.icon }}" class="icon"/>
+                      <div class="text">{{ option.name }}</div>
+                    </div>
                   </ng-template>
                 </p-dropdown>
-                
-              </div> 
+                <span *ngIf="calculatorForm.get('indicador_a')?.touched && calculatorForm.get('indicador_a')?.invalid || requerido && calculatorForm.get('indicador_a')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
+              </div>
+
             </div>
   
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table id="elemento" class="animate__animated animate__fadeInDown table myBorder">
                   <thead>
                     <tr>
-                      <th scope="col">BETA</th>
-                      <th scope="col">PUNTAJE</th>
+                      <th scope="col" class="center">BETA</th>
+                      <th scope="col" class="center">PUNTAJE</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_a')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_a')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_a')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_a')}}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              
             </div>
 
           </div>
@@ -78,12 +83,15 @@
                         </div>
                   </ng-template>
                 </p-dropdown>
+                <span *ngIf="calculatorForm.get('indicador_b')?.touched && calculatorForm.get('indicador_b')?.invalid || requerido && calculatorForm.get('indicador_b')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
               </div>
             </div>
 
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table class="animate__animated animate__fadeInDown table myBorder">
                   <thead>
                     <tr>
                       <th scope="col">BETA</th>
@@ -92,8 +100,8 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_b')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_b')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_b')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_b')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -123,16 +131,19 @@
                         </div>
                   </ng-template>
                 </p-dropdown>
+                <span *ngIf="calculatorForm.get('indicador_c')?.touched && calculatorForm.get('indicador_c')?.invalid || requerido && calculatorForm.get('indicador_c')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
               </div>
             </div>
             
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_c')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_c')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_c')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_c')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -165,16 +176,19 @@
                         </div>
                   </ng-template>
                 </p-dropdown>
+                <span *ngIf="calculatorForm.get('indicador_d')?.touched && calculatorForm.get('indicador_d')?.invalid || requerido && calculatorForm.get('indicador_d')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
               </div>
             </div>
             
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_d')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_d')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_d')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_d')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -204,16 +218,19 @@
                         </div>
                   </ng-template>
                 </p-dropdown>
+                <span *ngIf="calculatorForm.get('indicador_e')?.touched && calculatorForm.get('indicador_e')?.invalid || requerido && calculatorForm.get('indicador_e')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
               </div>
             </div>
             
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_e')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_e')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_e')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_e')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -246,16 +263,19 @@
                         </div>
                   </ng-template>
                 </p-dropdown>
+                <span *ngIf="calculatorForm.get('indicador_f')?.touched && calculatorForm.get('indicador_f')?.invalid || requerido && calculatorForm.get('indicador_f')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
               </div>
             </div>
             
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_f')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_f')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_f')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_f')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -285,16 +305,19 @@
                         </div>
                   </ng-template>
                 </p-dropdown>
+                <span *ngIf="calculatorForm.get('indicador_g')?.touched && calculatorForm.get('indicador_g')?.invalid || requerido && calculatorForm.get('indicador_g')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
               </div>
             </div>
             
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_g')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_g')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_g')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_g')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -324,16 +347,19 @@
                         </div>
                   </ng-template>
                 </p-dropdown>
+                <span *ngIf="calculatorForm.get('indicador_h')?.touched && calculatorForm.get('indicador_h')?.invalid || requerido && calculatorForm.get('indicador_h')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
               </div>
             </div>
             
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_h')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_h')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_h')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_h')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -363,16 +389,19 @@
                         </div>
                   </ng-template>
                 </p-dropdown>
+                <span *ngIf="calculatorForm.get('indicador_i')?.touched && calculatorForm.get('indicador_i')?.invalid || requerido && calculatorForm.get('indicador_i')?.invalid" class="input_error">
+                  ** Campo requerido
+                </span>
               </div>
             </div>
             
             <div class="col-12 col-sm-3 align-self-end">
               <div class="card-body">
-                <table class="table myBorder">
+                <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td>{{getIndicadorBeta('indicador_i')}}</td>
-                      <td>{{getIndicadorPuntaje('indicador_i')}}</td>
+                      <td class="center">{{getIndicadorBeta('indicador_i')}}</td>
+                      <td class="center">{{getIndicadorPuntaje('indicador_i')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -400,7 +429,9 @@
                     </div>
               </ng-template>
             </p-dropdown>
-            <!-- <p-inputNumber formControlName="indicador_k" inputId="temperature" suffix="%"> </p-inputNumber> -->
+            <span *ngIf="calculatorForm.get('indicador_k')?.touched && calculatorForm.get('indicador_k')?.invalid || requerido && calculatorForm.get('indicador_k')?.invalid" class="input_error">
+              ** Campo requerido
+            </span>
           </div>
   
         </div>
@@ -423,6 +454,9 @@
                     </div>
               </ng-template>
             </p-dropdown>
+            <span *ngIf="calculatorForm.get('indicador_l')?.touched && calculatorForm.get('indicador_l')?.invalid || requerido && calculatorForm.get('indicador_l')?.invalid" class="input_error">
+              ** Campo requerido
+            </span>
           </div>
           
         </div>
@@ -462,77 +496,92 @@
         <div class="col-12 col-lg-6">
           <div class="card-body">
             <div class="list-group">
-              <div class="list-group-item">
-                <h5 class="mb-1">Ejecutivo de negocios:</h5>
-                <br>
-                <span class="p-float-label">
-                  <input pInputText id="nombre-ejecutivo"/>
-                  <label htmlFor="nombre-ejecutivo">Nombre</label>
-                </span>
-              </div>
+              <form [formGroup]="prospectoForm" (ngSubmit)="guardarProspecto()">
 
-              <div class="list-group-item">
-                <h5 class="mb-1">Prospecto:</h5>
-                <br>
-                <div class="row">
-
-                  <div class="col">
-                    <span class="p-float-label">
-                      <input pInputText id="nombre-prospecto"/>
-                      <label htmlFor="nombre-prospecto">Nombre</label>
-                    </span>
+                <div class="list-group-item">
+                  <h5 class="mb-1">Prospecto:</h5>
+                  <br>
+                  <div class="row">
+  
+                    <div class="col">
+                      <span class="p-float-label">
+                        <input pInputText formControlName="nombreProspecto"/>
+                        <label>Nombre completo</label>
+                      </span>
+                    </div>
+  
+                    <div class="col">
+                      <span class="p-float-label">
+                        <input pInputText formControlName="emailProspecto"/>
+                        <label>Email</label>
+                      </span>
+                    </div>
+  
                   </div>
-
-                  <div class="col">
-                    <span class="p-float-label">
-                      <input pInputText id="email-propecto"/>
-                      <label htmlFor="email-propecto">Email</label>
-                    </span>
+                  <br>
+                  <div class="row">
+  
+                    <div class="col">
+                      <span class="p-float-label">
+                        <input pInputText formControlName="telProspecto"/>
+                        <label>Teléfono</label>
+                      </span>
+                    </div>
+  
+                    <div class="col">
+                      <span class="p-float-label">
+                        <input pInputText formControlName="direccionProspecto"/>
+                        <label>Dirección</label>
+                      </span>
+                    </div>
+  
                   </div>
-
                 </div>
-                <br>
-                <div class="row">
-
-                  <div class="col">
-                    <span class="p-float-label">
-                      <input pInputText id="tel-propecto"/>
-                      <label htmlFor="tel-propecto">Teléfono</label>
-                    </span>
+  
+                <div class="list-group-item">
+                  <h5 class="mb-1">Ejecutivo de negocios:</h5>
+                  <br>
+                  <div class="row">
+  
+                    <div class="col">
+                      <span class="p-float-label">
+                        <input pInputText formControlName="nombreEjecutivo"/>
+                        <label>Nombre completo</label>
+                      </span>
+                    </div>
+  
+                    <div class="col center">
+                      <button type="submit" class="ms-auto boton-style1">Guardar</button>
+                    </div>
+  
                   </div>
-
-                  <div class="col">
-                    <span class="p-float-label">
-                      <input pInputText id="direccion-propecto"/>
-                      <label htmlFor="direccion-propecto">Dirección</label>
-                    </span>
-                  </div>
-
                 </div>
 
-              </div>
+              </form>
             </div>
           </div>
         </div>
 
         <div class="col-12 col-lg-6">
-          <div class="card-body table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">BETA</th>
-                  <th scope="col">PUNTAJE</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Total</strong></td>
-                  <td>{{ totalBeta }}</td>
-                  <td>{{ totalPuntaje }}</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col" class="center">BETA</th>
+                    <th scope="col" class="center">PUNTAJE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Total</strong></td>
+                    <td class="center">{{ totalBeta | number:'1.2-2' }}</td>
+                    <td class="center">{{ totalPuntaje }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div class="card-body">
@@ -541,30 +590,42 @@
                 <tbody>
                   <tr>
                     <td><strong>Probabilidad de Incumplimiento</strong></td>
-                    <td>{{respuestaData.resultado.totalizadores.probabilidadIncumplimiento}}%</td>
+                    <td class="center">{{respuestaData.resultado.totalizadores.probabilidadIncumplimiento}}%</td>
                   </tr>
                   <tr>
                     <td><strong>Puntaje</strong></td>
-                    <td>{{respuestaData.resultado.totalizadores.puntuaje}}</td>
+                    <td class="center">{{respuestaData.resultado.totalizadores.puntuaje}}</td>
                   </tr>
                   <tr>
                     <td><strong>% Reservas</strong></td>
-                    <td>{{respuestaData.resultado.totalizadores.reservaPerdida}}%</td>
+                    <td class="center">{{respuestaData.resultado.totalizadores.reservaPerdida}}%</td>
                   </tr>
                   <tr>
                     <td><strong>Calificación</strong></td>
-                    <td>{{respuestaData.resultado.totalizadores.calificacion}}</td>
+                    <td class="center">{{respuestaData.resultado.totalizadores.calificacion}}</td>
                   </tr>
               </table>
             </div>
           </div>
         </div>
-      </div>
 
-      <button type="button" class="mx-auto boton-style1" (click)="showDialog()">
-        Tabla de porcentaje de reservas preventivas
-      </button>
-      <br>
+        <div class="col-12 col-lg-6">
+          <div class="card-body center">
+            <button type="button" class=" boton-style2" (click)="showDialog()">
+              Tabla de porcentaje de reservas preventivas
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="card-body center">
+            <button type="button" class="boton-style2" (click)="generadorPDF()">
+              Descargar Evaluación
+            </button>
+          </div>
+        </div>
+        
+      </div>
 
     </div>
     <p-dialog [(visible)]="visible">
