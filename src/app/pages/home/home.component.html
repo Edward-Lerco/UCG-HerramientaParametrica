@@ -50,8 +50,8 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_a')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_a')}}</td>
+                      <td class="center">{{getValueSelect('indicador_a', 'beta')}}</td>
+                      <td class="center">{{getValueSelect('indicador_a', 'puntaje')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -100,8 +100,8 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_b')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_b')}}</td>
+                      <td class="center">{{getValueSelect('indicador_b', 'beta')}}</td>
+                      <td class="center">{{getValueSelect('indicador_b', 'puntaje')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -142,8 +142,8 @@
                 <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_c')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_c')}}</td>
+                      <td class="center">{{getValueSelect('indicador_c', 'beta')}}</td>
+                      <td class="center">{{getValueSelect('indicador_c', 'puntaje')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -187,8 +187,8 @@
                 <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_d')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_d')}}</td>
+                      <td class="center">{{getValueSelect('indicador_d', 'beta')}}</td>
+                      <td class="center">{{getValueSelect('indicador_d', 'puntaje')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -229,8 +229,8 @@
                 <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_e')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_e')}}</td>
+                      <td class="center">{{getValueSelect('indicador_e', 'beta')}}</td>
+                      <td class="center">{{getValueSelect('indicador_e', 'puntaje')}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -249,20 +249,8 @@
               </div>
               <label class="color1"><strong>6. Monto de ventas ($)</strong></label>
               <div class="p-fluid">
-                <p-dropdown placeholder="--Seleccione una opción--" formControlName="indicador_f" [options]="indicador_f" optionLabel="name">
-                  <ng-template let-option pTemplate="selectedItem">
-                    <div class="flex gap-2" *ngIf="option">
-                        <img src="{{ option.icon }}" class="icon">
-                        <div class="text">{{ option.name }}</div>
-                    </div>
-                  </ng-template>
-                  <ng-template let-option pTemplate="item">
-                    <div class="flex  gap-2">
-                            <img src="{{ option.icon }}" class="icon"/>
-                            <div class="text">{{ option.name }}</div>
-                        </div>
-                  </ng-template>
-                </p-dropdown>
+
+                <p-inputNumber formControlName="indicador_f" inputId="currency-us" mode="currency" currency="USD" locale="en-US"> </p-inputNumber>
                 <span *ngIf="calculatorForm.get('indicador_f')?.touched && calculatorForm.get('indicador_f')?.invalid || requerido && calculatorForm.get('indicador_f')?.invalid" class="input_error">
                   ** Campo requerido
                 </span>
@@ -274,8 +262,8 @@
                 <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_f')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_f')}}</td>
+                      <td class="center">{{getValueInput('indicador_f')?.beta}}</td>
+                      <td class="center">{{getValueInput('indicador_f')?.puntaje}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -291,20 +279,9 @@
             <div class="col-12 col-sm-9">
               <label class="color1"><strong>7. Antigüedad de la empresa (en meses)</strong></label>
               <div class="p-fluid">
-                <p-dropdown placeholder="--Seleccione una opción--" formControlName="indicador_g" [options]="indicador_g" optionLabel="name">
-                  <ng-template let-option pTemplate="selectedItem">
-                    <div class="flex gap-2" *ngIf="option">
-                        <img src="{{ option.icon }}" class="icon">
-                        <div class="text">{{ option.name }}</div>
-                    </div>
-                  </ng-template>
-                  <ng-template let-option pTemplate="item">
-                    <div class="flex  gap-2">
-                            <img src="{{ option.icon }}" class="icon"/>
-                            <div class="text">{{ option.name }}</div>
-                        </div>
-                  </ng-template>
-                </p-dropdown>
+
+                <p-inputNumber inputId="integeronly" formControlName="indicador_g"></p-inputNumber>
+
                 <span *ngIf="calculatorForm.get('indicador_g')?.touched && calculatorForm.get('indicador_g')?.invalid || requerido && calculatorForm.get('indicador_g')?.invalid" class="input_error">
                   ** Campo requerido
                 </span>
@@ -316,8 +293,8 @@
                 <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_g')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_g')}}</td>
+                      <td class="center">{{getValueInput('indicador_g')?.beta}}</td>
+                      <td class="center">{{getValueInput('indicador_g')?.puntaje}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -333,20 +310,9 @@
             <div class="col-12 col-sm-9">
               <label class="color1"><strong>8. Margen Financiero (%)</strong></label>
               <div class="p-fluid">
-                <p-dropdown placeholder="--Seleccione una opción--" formControlName="indicador_h" [options]="indicador_h" optionLabel="name">
-                  <ng-template let-option pTemplate="selectedItem">
-                    <div class="flex gap-2" *ngIf="option">
-                        <img src="{{ option.icon }}" class="icon">
-                        <div class="text">{{ option.name }}</div>
-                    </div>
-                  </ng-template>
-                  <ng-template let-option pTemplate="item">
-                    <div class="flex  gap-2">
-                            <img src="{{ option.icon }}" class="icon"/>
-                            <div class="text">{{ option.name }}</div>
-                        </div>
-                  </ng-template>
-                </p-dropdown>
+
+                <p-inputNumber formControlName="indicador_h" [minFractionDigits]="2" inputId="percent" suffix="%"> </p-inputNumber>
+
                 <span *ngIf="calculatorForm.get('indicador_h')?.touched && calculatorForm.get('indicador_h')?.invalid || requerido && calculatorForm.get('indicador_h')?.invalid" class="input_error">
                   ** Campo requerido
                 </span>
@@ -358,8 +324,8 @@
                 <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_h')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_h')}}</td>
+                      <td class="center">{{getValueInput('indicador_h')?.beta}}</td>
+                      <td class="center">{{getValueInput('indicador_h')?.puntaje}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -375,20 +341,9 @@
             <div class="col-12 col-sm-9">
               <label class="color1"><strong>9. ROA (%)</strong></label>
               <div class="p-fluid">
-                <p-dropdown placeholder="--Seleccione una opción--" formControlName="indicador_i" [options]="indicador_i" optionLabel="name">
-                  <ng-template let-option pTemplate="selectedItem">
-                    <div class="flex gap-2" *ngIf="option">
-                        <img src="{{ option.icon }}" class="icon">
-                        <div class="text">{{ option.name }}</div>
-                    </div>
-                  </ng-template>
-                  <ng-template let-option pTemplate="item">
-                    <div class="flex  gap-2">
-                            <img src="{{ option.icon }}" class="icon"/>
-                            <div class="text">{{ option.name }}</div>
-                        </div>
-                  </ng-template>
-                </p-dropdown>
+
+                <p-inputNumber formControlName="indicador_i" inputId="percent" [minFractionDigits]="2" suffix="%"> </p-inputNumber>
+
                 <span *ngIf="calculatorForm.get('indicador_i')?.touched && calculatorForm.get('indicador_i')?.invalid || requerido && calculatorForm.get('indicador_i')?.invalid" class="input_error">
                   ** Campo requerido
                 </span>
@@ -400,8 +355,8 @@
                 <table class="animate__animated animate__fadeInDown table myBorder">
                   <tbody>
                     <tr>
-                      <td class="center">{{getIndicadorBeta('indicador_i')}}</td>
-                      <td class="center">{{getIndicadorPuntaje('indicador_i')}}</td>
+                      <td class="center">{{getValueInput('indicador_i')?.beta}}</td>
+                      <td class="center">{{getValueInput('indicador_i')?.puntaje}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -415,20 +370,9 @@
   
           <label class="color1"><strong>10. Severidad de la Pérdida (%)</strong></label>
           <div class="p-fluid">
-            <p-dropdown placeholder="--Seleccione una opción--" formControlName="indicador_k" [options]="indicador_k" optionLabel="name">
-            <ng-template let-option pTemplate="selectedItem">
-                <div class="flex gap-2" *ngIf="option">
-                    <img src="{{ option.icon }}" class="icon">
-                    <div class="text">{{ option.name }}</div>
-                </div>
-              </ng-template>
-              <ng-template let-option pTemplate="item">
-                <div class="flex  gap-2">
-                        <img src="{{ option.icon }}" class="icon"/>
-                        <div class="text">{{ option.name }}</div>
-                    </div>
-              </ng-template>
-            </p-dropdown>
+
+            <p-inputNumber formControlName="indicador_k" inputId="percent" [minFractionDigits]="2" suffix="%"> </p-inputNumber>
+
             <span *ngIf="calculatorForm.get('indicador_k')?.touched && calculatorForm.get('indicador_k')?.invalid || requerido && calculatorForm.get('indicador_k')?.invalid" class="input_error">
               ** Campo requerido
             </span>
@@ -522,8 +466,10 @@
                   <div class="row">
   
                     <div class="col">
+
                       <span class="p-float-label">
-                        <input pInputText formControlName="telProspecto"/>
+                        <!-- <input pInputText formControlName="telProspecto"/> -->
+                        <p-inputNumber inputId="integeronly" [useGrouping]="false" formControlName="telProspecto"></p-inputNumber>
                         <label>Teléfono</label>
                       </span>
                     </div>

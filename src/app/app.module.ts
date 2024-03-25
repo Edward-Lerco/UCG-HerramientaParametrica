@@ -18,6 +18,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { DropdownModule } from 'primeng/dropdown';
     AccordionModule,
     DialogModule,
     InputNumberModule,
-    
+    InputMaskModule,
     DropdownModule,
   ],
   providers: [],

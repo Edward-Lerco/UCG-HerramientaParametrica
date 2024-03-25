@@ -56,6 +56,7 @@ interface indicadores {
   icon: string;
 }
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -71,20 +72,21 @@ export class HomeComponent implements OnInit {
   delayTime = 100;
   visible?: boolean;
   indicador_a!: indicadores[];
-  indicador_b!: indicadores[]; 
-  indicador_c!: indicadores[]; 
-  indicador_d!: indicadores[]; 
-  indicador_e!: indicadores[]; 
-  indicador_f!: indicadores[]; 
-  indicador_g!: indicadores[]; 
-  indicador_h!: indicadores[]; 
-  indicador_i!: indicadores[]; 
-  indicador_k!: indicadores[]; 
+  indicador_b!: indicadores[];
+  indicador_c!: indicadores[];
+  indicador_d!: indicadores[];
+  indicador_e!: indicadores[];
+  indicador_f!: indicadores[];
+  indicador_g!: indicadores[];
+  indicador_h!: indicadores[];
+  indicador_i!: indicadores[];
+  indicador_k!: indicadores[];
   indicador_l!: indicadores[];
   totalBeta: number = 0;
   totalPuntaje: number = 0;
   prospectoForm!: FormGroup;
   requerido = false;
+  resultadoData: Item[] = [];
 
   respuestaData: Respuesta = {
     code: 0,
@@ -106,13 +108,14 @@ export class HomeComponent implements OnInit {
     private formBuilder2: FormBuilder
   ){
     this.prospectoForm = this.formBuilder2.group({
-      nombreProspecto:    ['', Validators.required],
-      emailProspecto:     ['', [Validators.required, Validators.email]],
-      telProspecto:       ['', Validators.required],
-      direccionProspecto: ['', Validators.required],
-      nombreEjecutivo:    ['', Validators.required],
+      nombreProspecto:    [null, Validators.required],
+      emailProspecto:     [null, [Validators.required, Validators.email]],
+      telProspecto:       [null, Validators.required],
+      direccionProspecto: [null, Validators.required],
+      nombreEjecutivo:    [null, Validators.required],
     });
   }
+
 
   ngOnInit() {
     this.calculatorForm = this.formBuilder.group({
@@ -149,7 +152,6 @@ export class HomeComponent implements OnInit {
       { name: 'San Pedro Cholula',        code: '40',          beta: '-1.48', puntaje:'132',  icon:'assets/icons/iglesia.png'},
       { name: 'Otro',                     code: '50',          beta: '1.36',  puntaje:'50' ,  icon:'assets/icons/otro-muni.png'}
     ]
-
     this.indicador_d = [
       { name: '0 créditos',               code: '0',           beta: '1.69',  puntaje: '40',  icon:'assets/icons/creditos.png'},
       { name: 'De 1 a 2 créditos',        code: '1',           beta: '-0.93', puntaje: '116', icon:'assets/icons/creditos.png'},
@@ -161,38 +163,45 @@ export class HomeComponent implements OnInit {
       { name: 'Hasta 30 días de atraso',  code: '20',          beta: '0',     puntaje: '89',  icon:'assets/icons/atraso.png'},
       { name: 'Más de 30 días de atraso', code: '30',          beta: '1.4',   puntaje: '48',  icon:'assets/icons/atraso.png'},
     ]
-    this.indicador_f = [
-      { name: 'Menor a $5,000,000',       code: '4900000',     beta: '0.25',  puntaje: '82',  icon:'assets/icons/monto1.png'},
-      { name: 'De $5,000,000 a $25,000,000',    code: '24000000', beta: '0.74', puntaje: '68', icon:'assets/icons/monto2.png'},
-      { name: 'De $26,000,000 a $100,000,000',  code: '50000000', beta: '0',    puntaje: '89', icon:'assets/icons/monto3.png'},
-      { name: 'Mayor a $100,000,000',     code: '110000000',  beta: '-2.26', puntaje: '154', icon:'assets/icons/monto4.png'},
-    ]
-    this.indicador_g = [
-      { name: 'De 0 a 12 meses',          code: '11',         beta: '0.56',  puntaje: '73',  icon:'assets/icons/antiguedad1.png'},
-      { name: 'De 13 a 36 meses',         code: '30',         beta: '0',    puntaje: '89', icon:'assets/icons/antiguedad1.png'},
-      { name: 'Mayor a 36 meses',         code: '37',         beta: '-0.07', puntaje: '91',  icon:'assets/icons/antiguedad1.png'},
-    ]
-    this.indicador_h = [
-      { name: 'Menor o igual a 1%',       code: '0',          beta: '0.81',  puntaje: '65',  icon:'assets/icons/menor-igual.png'},
-      { name: 'Mayor a 1%',               code: '2',          beta: '0',     puntaje: '89',  icon:'assets/icons/mayor.png'},
-    ]
-    this.indicador_i = [
-      { name: 'Del 0% al 1%',             code: '0',          beta: '0.96',  puntaje: '61',  icon:'assets/icons/menor-igual.png'},
-      { name: 'Del 1.1% al 7%',           code: '4',          beta: '0.61',  puntaje: '71',  icon:'assets/icons/mayor-igual.png'},
-      { name: 'Mayor al 7%',              code: '8',          beta: '0',     puntaje: '89',  icon:'assets/icons/mayor.png'},
-    ]
-    this.indicador_k = [
-      { name: 'Del 0% al 10%',            code: '10' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 11% al 20%',           code: '20' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 21% al 30%',           code: '30' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 31% al 40%',           code: '40' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 41% al 50%',           code: '50' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 51% al 60%',           code: '60' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 61% al 70%',           code: '70' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 71% al 80%',           code: '80' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 81% al 90%',           code: '90' ,        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-      { name: 'Del 91% al 100%',          code: '100',        beta: '',      puntaje: '',    icon:'assets/icons/perdida.png'},
-    ]
+    this.calculatorForm.controls['indicador_f']?.valueChanges.subscribe((value: number) => {
+      if (value < 5000000) {
+        this.indicador_f = [{ name: value.toString(), code: '', beta: '0.25', puntaje: '82', icon: '' }];
+      } else if (value >= 5000000 && value <= 25000000) {
+        this.indicador_f = [{ name: value.toString(), code: '', beta: '0.74', puntaje: '68', icon: '' }];
+      } else if (value > 25000000 && value <= 100000000) {
+        this.indicador_f = [{ name: value.toString(), code: '', beta: '0', puntaje: '89', icon: '' }];
+      } else if (value > 100000000) {
+        this.indicador_f = [{ name: value.toString(), code: '', beta: '-2.26', puntaje: '154', icon: '' }];
+      }
+    });
+    this.calculatorForm.controls['indicador_g']?.valueChanges.subscribe((value: number) => {
+      if (value <= 12) {
+        this.indicador_g = [{ name: value.toString(), code: '', beta: '0.56', puntaje: '73', icon: ''}]
+      } else if ( value > 12 && value <= 36 ) {
+        this.indicador_g = [{ name: value.toString(), code: '', beta: '0', puntaje: '89', icon: ''}]
+      } else if ( value > 36 ) {
+        this.indicador_g = [{ name: value.toString(), code: '', beta: '-0.07', puntaje: '91', icon: ''}]
+      }
+    });
+    this.calculatorForm.controls['indicador_h']?.valueChanges.subscribe((value: number) => {
+      if ( value <= 1 ) {
+        this.indicador_h = [{ name: value.toString(), code: '', beta: '0.81', puntaje: '65', icon: ''}]
+      } else if ( value > 1 ) {
+        this.indicador_h = [{ name: value.toString(), code: '', beta: '0', puntaje: '89', icon: ''}]
+      }
+    });
+    this.calculatorForm.controls['indicador_i']?.valueChanges.subscribe((value: number) => {
+      if ( value <= 1 ) {
+        this.indicador_i = [{ name: value.toString(), code: '', beta: '0.96', puntaje: '61', icon: ''}]
+      } else if ( value > 1 && value <= 7 ) {
+        this.indicador_i = [{ name: value.toString(), code: '', beta: '0.61', puntaje: '71', icon: ''}]
+      } else if ( value > 7 ) {
+        this.indicador_i = [{ name: value.toString(), code: '', beta: '0', puntaje: '89', icon: ''}]
+      }
+    });
+    this.calculatorForm.controls['indicador_k']?.valueChanges.subscribe((value: number) => {
+        this.indicador_k = [{ name: value.toString(), code: '', beta: '', puntaje: '', icon: ''}]
+    });
     this.indicador_l = [
       { name: 'No Revolvente',            code: '10',         beta: '',      puntaje: '',    icon:'assets/icons/no-relevante.png'},
       { name: 'TDC y otros créditos revolventes', code: '20', beta: '',      puntaje: '',    icon:'assets/icons/tdc.png'},
@@ -200,21 +209,44 @@ export class HomeComponent implements OnInit {
       { name: 'Comercial',                code: '40',         beta: '',      puntaje: '',    icon:'assets/icons/comercial.png'}
     ]
   }
-
-  getIndicadorValue(controlName: string): string {
+  
+  getValueSelect(controlName: string, property: string): string {
     const control = this.calculatorForm.get(controlName);
-    return control && control.value ? control.value['name'] : '';
+    return control && control.value ? control.value[property] : '';
+  }
+  
+  getValueInput(indicador: string): { name: string, beta: string, puntaje: string } | undefined {
+    let indicadorData;
+    switch(indicador) {
+      case 'indicador_f':
+        indicadorData = this.indicador_f;
+        break;
+      case 'indicador_g':
+        indicadorData = this.indicador_g;
+        break;
+      case 'indicador_h':
+        indicadorData = this.indicador_h;
+        break;
+      case 'indicador_i':
+        indicadorData = this.indicador_i;
+        break;
+      case 'indicador_k':
+        indicadorData = this.indicador_k;
+        break;
+    }
+    return indicadorData && indicadorData.length > 0 ? { name: indicadorData[0].name, beta: indicadorData[0].beta, puntaje: indicadorData[0].puntaje } : undefined;
   }
 
-  getIndicadorBeta(controlName: string): string {
-    const control = this.calculatorForm.get(controlName);
-    return control && control.value ? control.value['beta'] : '';
-  }
+  // getBeta(indicador: string): number | undefined {
+  //   const item = this.respuestaData.resultado.items.find(item => item.attribute === indicador);
+  //   return item ? item.beta : undefined;
+  // }
+  
+  // getPuntaje(indicador: string): number | undefined {
+  //   const item = this.respuestaData.resultado.items.find(item => item.attribute === indicador);
+  //   return item ? item.puntuaje : undefined;
+  // }
 
-  getIndicadorPuntaje(controlName: string): string {
-    const control = this.calculatorForm.get(controlName);
-    return control && control.value ? control.value['puntaje'] : '';
-  }
 
   btnEvaluar() {
     this.requerido = true;
@@ -225,18 +257,17 @@ export class HomeComponent implements OnInit {
         indicador_c: Number(this.calculatorForm.controls['indicador_c'].value['code']),
         indicador_d: Number(this.calculatorForm.controls['indicador_d'].value['code']),
         indicador_e: Number(this.calculatorForm.controls['indicador_e'].value['code']),
-        indicador_f: Number(this.calculatorForm.controls['indicador_f'].value['code']),
-        indicador_g: Number(this.calculatorForm.controls['indicador_g'].value['code']),
-        indicador_h: Number(this.calculatorForm.controls['indicador_h'].value['code']),
-        indicador_i: Number(this.calculatorForm.controls['indicador_i'].value['code']),
-        indicador_k: Number(this.calculatorForm.controls['indicador_k'].value['code']),
+        indicador_f: this.calculatorForm.controls['indicador_f'].value,
+        indicador_g: this.calculatorForm.controls['indicador_g'].value,
+        indicador_h: this.calculatorForm.controls['indicador_h'].value,
+        indicador_i: this.calculatorForm.controls['indicador_i'].value,
+        indicador_k: this.calculatorForm.controls['indicador_k'].value,
         indicador_l: Number(this.calculatorForm.controls['indicador_l'].value['code'])
       };
       this.local.isloader = true;
       this.alert = false;
       this.mostrarDetalles = true;
       this.respuesta(body);      
-      
     } else {
       this.alert = true;
       setTimeout(() => {
@@ -284,9 +315,33 @@ export class HomeComponent implements OnInit {
     this.visible = true;
   }
 
+  convertirMoneda(indicador: string): string | undefined {
+    const valor = this.getValueInput(indicador)?.name;
+    if (valor) {
+      const numero = parseFloat(valor);
+      return numero.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+    }
+    return undefined;
+  }
+
+  convertirPorcentaje(indicador: string): string | undefined {
+    const valor = this.getValueInput(indicador)?.name;
+    if (valor) {
+      const numero = parseFloat(valor);
+      const porcentaje = numero / 100;
+      return porcentaje.toLocaleString('es-MX', { style: 'percent', maximumFractionDigits: 2 });
+    }
+    return undefined;
+  }
+  
+
   generadorPDF(){
     var fechaActual = new Date().toLocaleString();
     const totalBetaFormatted = this.totalBeta.toFixed(2);
+    const probabilidadIncumplimiento = this.respuestaData.resultado.totalizadores.probabilidadIncumplimiento;
+    const probabilidadEnPorcentaje = (probabilidadIncumplimiento).toFixed(2) + '%';
+    const reservaPerdida = this.respuestaData.resultado.totalizadores.reservaPerdida;
+    const reservaPorcentaje = (reservaPerdida).toFixed(2) + '%';
 
     let pdf:any = {
       pageSize: 'LETTER',
@@ -340,19 +395,20 @@ export class HomeComponent implements OnInit {
         {
           table: {
             style: 'table',
+            
             headerRows: 1,
             body: [
               [{text: 'Variable', style: 'tableHeader'}, {text: 'Atributo', style: 'tableHeader'}, {text: 'BETA', style: 'tableHeader'}, {text: 'PUNTAJE', style: 'tableHeader'}],
-              ['1. Indique la industria del crédito',                       {text: this.getIndicadorValue('indicador_a'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_a'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_a'), alignment: 'center'}],
-              ['2. ¿Es actividad vulnerable?',                              {text: this.getIndicadorValue('indicador_b'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_b'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_b'), alignment: 'center'}],
-              ['3. Municipio del crédito',                                  {text: this.getIndicadorValue('indicador_c'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_c'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_c'), alignment: 'center'}],
-              ['4. Total de créditos con los que cuenta el intermediario',  {text: this.getIndicadorValue('indicador_d'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_d'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_d'), alignment: 'center'}],
-              ['5. Días de atraso que presenta en buró el acreditado',      {text: this.getIndicadorValue('indicador_e'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_e'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_e'), alignment: 'center'}],
-              ['6. Monto de ventas',                                        {text: this.getIndicadorValue('indicador_f'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_f'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_f'), alignment: 'center'}],
-              ['7. Antigüedad de la empresa (en meses)',                    {text: this.getIndicadorValue('indicador_g'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_g'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_g'), alignment: 'center'}],
-              ['8. Margen Financiero',                                      {text: this.getIndicadorValue('indicador_h'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_h'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_h'), alignment: 'center'}],
-              ['9. ROA',                                                    {text: this.getIndicadorValue('indicador_i'), alignment: 'center'},  {text: this.getIndicadorBeta('indicador_i'), alignment: 'center'}, {text: this.getIndicadorPuntaje('indicador_i'), alignment: 'center'}],
-              [{text: 'Total', alignment: 'center', bold: true},  '',       {text: totalBetaFormatted, alignment: 'center', bold: true},                {text: this.totalPuntaje, alignment: 'center', bold: true}],
+              ['1. Indique la industria del crédito',                       {text: this.getValueSelect('indicador_a', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_a', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_a', 'puntaje'), alignment: 'center'}],
+              ['2. ¿Es actividad vulnerable?',                              {text: this.getValueSelect('indicador_b', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_b', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_b', 'puntaje'), alignment: 'center'}],
+              ['3. Municipio del crédito',                                  {text: this.getValueSelect('indicador_c', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_c', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_c', 'puntaje'), alignment: 'center'}],
+              ['4. Total de créditos con los que cuenta el intermediario',  {text: this.getValueSelect('indicador_d', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_d', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_d', 'puntaje'), alignment: 'center'}],
+              ['5. Días de atraso que presenta en buró el acreditado',      {text: this.getValueSelect('indicador_e', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_e', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_e', 'puntaje'), alignment: 'center'}],
+              ['6. Monto de ventas',                                        {text: this.convertirMoneda('indicador_f'), alignment: 'center'},  {text: this.getValueInput('indicador_f')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_f')?.puntaje, alignment: 'center'}],
+              ['7. Antigüedad de la empresa (en meses)',                    {text: this.getValueInput('indicador_g')?.name, alignment: 'center'},  {text: this.getValueInput('indicador_g')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_g')?.puntaje, alignment: 'center'}],
+              ['8. Margen Financiero',                                      {text: this.convertirPorcentaje('indicador_h'), alignment: 'center'},  {text: this.getValueInput('indicador_h')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_h')?.puntaje, alignment: 'center'}],
+              ['9. ROA',                                                    {text: this.convertirPorcentaje('indicador_i'), alignment: 'center'},  {text:this.getValueInput('indicador_i')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_i')?.puntaje, alignment: 'center'}],
+              [{text: 'Total', alignment: 'center', bold: true}, '',        {text: totalBetaFormatted, alignment: 'center', bold: true},           {text: this.totalPuntaje, alignment: 'center', bold: true}],
             ]
           },
           layout:{
@@ -370,11 +426,11 @@ export class HomeComponent implements OnInit {
             headerRows: 1,
             body: [
               [{text: 'Resultado de la evaluación', style: 'tableHeader', colSpan: 2},''],
-              [{text: 'Probabilidad de Incumplimiento'}, { text: this.respuestaData.resultado.totalizadores.probabilidadIncumplimiento, alignment: 'center', bold: true }],
+              [{text: 'Probabilidad de Incumplimiento'}, { text: probabilidadEnPorcentaje, alignment: 'center', bold: true }],
               [{text: 'Puntaje'},                        { text: this.respuestaData.resultado.totalizadores.puntuaje, alignment: 'center', bold: true }],
-              [{text: 'Severidad de la Pérdida'},        { text: this.getIndicadorValue('indicador_k'), alignment: 'center', bold: true }],
-              [{text: '% Reservas'},                     { text: this.respuestaData.resultado.totalizadores.reservaPerdida, alignment: 'center', bold: true }],
-              [{text: 'Tipo de crédito'},                { text: this.getIndicadorValue('indicador_l'), alignment: 'center', bold: true }],
+              [{text: 'Severidad de la Pérdida'},        { text: this.convertirPorcentaje('indicador_k'), alignment: 'center', bold: true }],
+              [{text: '% Reservas'},                     { text: reservaPorcentaje, alignment: 'center', bold: true }],
+              [{text: 'Tipo de crédito'},                { text: this.getValueSelect('indicador_l', 'name'), alignment: 'center', bold: true }],
               [{text: 'Calificación'},                   { text: this.respuestaData.resultado.totalizadores.calificacion, alignment: 'center', bold: true }]
             ]
           },
