@@ -429,7 +429,7 @@
   </div>
   <br><br>
 
-  <div class="content collapse" [ngClass]="{'show': mostrarDetalles}">
+  <div class="content " [ngClass]="{'show': mostrarDetalles}">
     <div class="card mb-3" >
       <div class="card-header d-flex">
         <button class="btn-close ms-auto" (click)="ocultarCard()"></button>
@@ -437,140 +437,159 @@
 
       <div class="row g-0">
 
-        <div class="col-12 col-lg-6">
-          <div class="card-body">
-            <div class="list-group">
-              <form [formGroup]="prospectoForm" (ngSubmit)="guardarProspecto()">
-
-                <div class="list-group-item">
-                  <h5 class="mb-1">Prospecto:</h5>
-                  <br>
-                  <div class="row">
-  
-                    <div class="col">
-                      <span class="p-float-label">
-                        <input pInputText formControlName="nombreProspecto"/>
-                        <label>Nombre completo</label>
-                      </span>
-                    </div>
-  
-                    <div class="col">
-                      <span class="p-float-label">
-                        <input pInputText formControlName="emailProspecto"/>
-                        <label>Email</label>
-                      </span>
-                    </div>
-  
-                  </div>
-                  <br>
-                  <div class="row">
-  
-                    <div class="col">
-
-                      <span class="p-float-label">
-                        <!-- <input pInputText formControlName="telProspecto"/> -->
-                        <p-inputNumber inputId="integeronly" [useGrouping]="false" formControlName="telProspecto"></p-inputNumber>
-                        <label>Teléfono</label>
-                      </span>
-                    </div>
-  
-                    <div class="col">
-                      <span class="p-float-label">
-                        <input pInputText formControlName="direccionProspecto"/>
-                        <label>Dirección</label>
-                      </span>
-                    </div>
-  
-                  </div>
-                </div>
-  
-                <div class="list-group-item">
-                  <h5 class="mb-1">Ejecutivo de negocios:</h5>
-                  <br>
-                  <div class="row">
-  
-                    <div class="col">
-                      <span class="p-float-label">
-                        <input pInputText formControlName="nombreEjecutivo"/>
-                        <label>Nombre completo</label>
-                      </span>
-                    </div>
-  
-                    <div class="col center">
-                      <button type="submit" class="ms-auto boton-style1">Guardar</button>
-                    </div>
-  
-                  </div>
-                </div>
-
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-6">
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col" class="center">BETA</th>
-                    <th scope="col" class="center">PUNTAJE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Total</strong></td>
-                    <td class="center">{{ totalBeta | number:'1.2-2' }}</td>
-                    <td class="center">{{ totalPuntaje }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td><strong>Probabilidad de Incumplimiento</strong></td>
-                    <td class="center">{{respuestaData.resultado.totalizadores.probabilidadIncumplimiento}}%</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Puntaje</strong></td>
-                    <td class="center">{{respuestaData.resultado.totalizadores.puntuaje}}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>% Reservas</strong></td>
-                    <td class="center">{{respuestaData.resultado.totalizadores.reservaPerdida}}%</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Calificación</strong></td>
-                    <td class="center">{{respuestaData.resultado.totalizadores.calificacion}}</td>
-                  </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-6">
-          <div class="card-body center">
-            <button type="button" class=" boton-style2" (click)="showDialog()">
-              Tabla de porcentaje de reservas preventivas
-            </button>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-6">
-          <div class="card-body center">
-            <button type="button" class="boton-style2" (click)="generadorPDF()">
-              Descargar Evaluación
-            </button>
-          </div>
-        </div>
         
+          <div class="col-12 col-lg-6">
+            <div class="card-body">
+              <div class="list-group">
+                <form [formGroup]="prospectoForm" (ngSubmit)="generadorPDF()">
+                  <div class="list-group-item">
+                    <h5 class="mb-1">Prospecto:</h5>
+                    <br>
+                    <div class="row">
+    
+                      <div class="col">
+                        <span class="p-float-label">
+                          <input pInputText formControlName="nombreProspecto"/>
+                          <label>Nombre completo</label>
+                        </span>
+                        <span *ngIf="prospectoForm.get('nombreProspecto')?.touched && prospectoForm.get('nombreProspecto')?.invalid || requerido2 && prospectoForm.get('nombreProspecto')?.invalid" class="input_error">
+                          ** Campo requerido
+                        </span>
+                      </div>
+    
+                      <div class="col">
+                        <span class="p-float-label">
+                          <input pInputText formControlName="emailProspecto"/>
+                          <label>Email</label>
+                        </span>
+                        <span *ngIf="prospectoForm.get('emailProspecto')?.touched && prospectoForm.get('emailProspecto')?.invalid || requerido2 && prospectoForm.get('emailProspecto')?.invalid" class="input_error">
+                          ** Campo requerido
+                        </span>
+                      </div>
+    
+                    </div>
+                    <br>
+                    <div class="row">
+    
+                      <div class="col">
+
+                        <span class="p-float-label">
+                          <p-inputNumber inputId="integeronly" [useGrouping]="false" formControlName="telProspecto"></p-inputNumber>
+                          <label>Teléfono</label>
+                        </span>
+                        <span *ngIf="prospectoForm.get('telProspecto')?.touched && prospectoForm.get('telProspecto')?.invalid || requerido2 && prospectoForm.get('telProspecto')?.invalid" class="input_error">
+                          ** Campo requerido
+                        </span>
+                      </div>
+    
+                      <div class="col">
+                        <span class="p-float-label">
+                          <input pInputText formControlName="direccionProspecto"/>
+                          <label>Dirección</label>
+                        </span>
+                        <span *ngIf="prospectoForm.get('direccionProspecto')?.touched && prospectoForm.get('direccionProspecto')?.invalid || requerido2 && prospectoForm.get('direccionProspecto')?.invalid" class="input_error">
+                          ** Campo requerido
+                        </span>
+                      </div>
+    
+                    </div>
+                  </div>
+    
+                  <div class="list-group-item">
+                    <h5 class="mb-1">Ejecutivo de negocios:</h5>
+                    <br>
+                    <div class="row">
+    
+                      <div class="col">
+                        <span class="p-float-label">
+                          <input pInputText formControlName="nombreEjecutivo"/>
+                          <label>Nombre completo</label>
+                        </span>
+                        <span *ngIf="prospectoForm.get('nombreEjecutivo')?.touched && prospectoForm.get('nombreEjecutivo')?.invalid || requerido2 && prospectoForm.get('nombreEjecutivo')?.invalid" class="input_error">
+                          ** Campo requerido
+                        </span>
+                      </div>
+    
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col" class="center">BETA</th>
+                      <th scope="col" class="center">PUNTAJE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Total</strong></td>
+                      <td class="center">{{ totalBeta | number:'1.2-2' }}</td>
+                      <td class="center">{{ totalPuntaje }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td><strong>Probabilidad de Incumplimiento</strong></td>
+                      <td class="center">{{respuestaData.resultado.totalizadores.probabilidadIncumplimiento}}%</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Puntaje</strong></td>
+                      <td class="center">{{respuestaData.resultado.totalizadores.puntuaje}}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>% Reservas</strong></td>
+                      <td class="center">{{respuestaData.resultado.totalizadores.reservaPerdida}}%</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Calificación</strong></td>
+                      <td class="center">{{respuestaData.resultado.totalizadores.calificacion}}</td>
+                    </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="card-body center">
+              <button type="button" class=" boton-style2" (click)="showDialog()">
+                Tabla de porcentaje de reservas preventivas
+              </button>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-6">
+            <div class="card-body center">
+              <button type="submit" class="boton-style2" (click)="generadorPDF()">
+                Descargar Evaluación
+              </button>
+            </div>
+          </div>
+        
+
+      </div>
+
+      <div class="collapse" [ngClass]="{'show' : alert2}">
+        <div class="alert alert-danger text-center" role="alert">
+          <i class="bi bi-exclamation-triangle margin-icon"></i>
+          <label>
+            ¡Los datos del prospecto y el ejecutivo son necesarios!
+          </label>
+        </div>
       </div>
 
     </div>
