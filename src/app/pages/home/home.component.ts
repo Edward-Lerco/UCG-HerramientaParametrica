@@ -62,15 +62,15 @@ interface indicadores {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   @ViewChild('bottom') bottom!: ElementRef;
 
   calculatorForm!: FormGroup
   mostrarDetalles: boolean = false;
   alert: boolean = false;
-  alert2: boolean = false
-  // camposInvalidos: Set<string> = new Set<string>();
   delayTime = 100;
+  delayTime2 = 500;
   visible?: boolean;
   indicador_a!: indicadores[];
   indicador_b!: indicadores[];
@@ -87,7 +87,8 @@ export class HomeComponent implements OnInit {
   totalPuntaje: number = 0;
   prospectoForm!: FormGroup;
   requerido = false;
-  requerido2 = false;
+  rango: string = '';
+
   resultadoData: Item[] = [];
 
   respuestaData: Respuesta = {
@@ -107,20 +108,19 @@ export class HomeComponent implements OnInit {
     private data:  DataService, 
     private local: LocalService,
     private formBuilder: FormBuilder,
-    private formBuilder2: FormBuilder
   ){
-    this.prospectoForm = this.formBuilder2.group({
+    this.calculatorForm = this.formBuilder.group({
       nombreProspecto:    [null, Validators.required],
+      apellido1Prospecto: [null, Validators.required],
+      apellido2Prospecto: [null, Validators.required],
       emailProspecto:     [null, [Validators.required, Validators.email]],
       telProspecto:       [null, Validators.required],
       direccionProspecto: [null, Validators.required],
+      monto:              [null, Validators.required],
       nombreEjecutivo:    [null, Validators.required],
-    });
-  }
+      apellido1Ejecutivo: [null, Validators.required],
+      apellido2Ejecutivo: [null, Validators.required],
 
-
-  ngOnInit() {
-    this.calculatorForm = this.formBuilder.group({
       indicador_a: [null, Validators.required],
       indicador_b: [null, Validators.required],
       indicador_c: [null, Validators.required],
@@ -133,7 +133,9 @@ export class HomeComponent implements OnInit {
       indicador_k: [null, Validators.required],
       indicador_l: [null, Validators.required]
     });
+  }
 
+  ngOnInit() {
     this.indicador_a = [
       { name: 'Construcción',             code: '10',          beta: '1.85',  puntaje: '36',  icon:'assets/icons/construccion.png'},
       { name: 'Textil',                   code: '20',          beta: '-0.56', puntaje: '105', icon:'assets/icons/textil.png'},
@@ -270,6 +272,8 @@ export class HomeComponent implements OnInit {
       this.alert = false;
       this.mostrarDetalles = true;
       this.respuesta(body);
+      console.log(this.calculatorForm);
+      
     } else {
       this.alert = true;
       setTimeout(() => {
@@ -297,6 +301,255 @@ export class HomeComponent implements OnInit {
         this.respuestaData = rsp;
       }
     });
+    this.calificacion();
+  }
+
+  private calificacion() {
+    const calificacion = this.respuestaData.resultado.totalizadores.calificacion;
+    const reservas = this.respuestaData.resultado.totalizadores.reservaPerdida;
+    const indicadorL = this.getValueSelect('indicador_l', 'code');
+
+    let colorRango: string = "Rojo";
+    const rangos:any = {
+        'A-1': {
+            '10': { minMin: 0-(2*0.1), min: 0, max: 2.0, maxMax: 2.0+(2*0.1)},
+            '20': { minMin: 0-(3*0.1), min: 0, max: 3.0, maxMax: 3.0+(3*0.1)},
+            '30': { minMin: 0-(0.5*0.1), min: 0, max: 0.50, maxMax: 0.50+(0.5*0.1)},
+            '40': { minMin: 0-(0.90*0.1), min: 0, max: 0.90, maxMax: 0.90+(0.90*0.1)}
+        },
+        'A-2': {
+            '10': { minMin: 2.0-(1*0.1), min: 2.0, max: 3.0, maxMax: 3.0+(1*0.1)},
+            '20': { minMin: 3.0-(2*0.1), min: 3.0, max: 5.0, maxMax: 5.0+(2*0.1)},
+            '30': { minMin: 0.50-(0.25*0.1), min: 0.50, max: 0.75, maxMax: 0.75+(0.25*0.1)},
+            '40': { minMin: 0.90-(0.6*0.1), min: 0.90, max: 1.5, maxMax: 1.5+(0.6*0.1)}
+        },
+        'B-1': {
+          '10': { minMin: 3.0-(1*0.1), min: 3.0, max: 4.0, maxMax: 4.0+(1*0.1)},
+          '20': { minMin: 5.0-(1.5*0.1), min: 5.0, max: 6.5, maxMax: 6.5+(1.5*0.1)},
+          '30': { minMin: 0.75-(0.25*0.1), min: 0.75, max: 1.0, maxMax: 1.0+(0.25*0.1)},
+          '40': { minMin: 1.5-(0.5*0.1), min: 1.5, max: 2.0, maxMax: 2.0+(0.5*0.1)}
+      },
+
+    };
+
+    if (calificacion in rangos && indicadorL in rangos[calificacion]) {
+        const rango = rangos[calificacion][indicadorL];
+        if (rango.min <= reservas && reservas <= rango.max) {
+            colorRango = 'Verde';
+        }
+    }
+
+  
+    if (calificacion === 'A-1') {
+      colorRango = "Rojo"
+      if (indicadorL === '10' && 0-(2*0.1) <= reservas && reservas <= 2.0+(2*0.1)) {
+        colorRango = 'Amarillo';
+        if (0 <= reservas && reservas <= 2.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 0-(3*0.1) <= reservas && reservas <= 3.0+(3*0.1)) {
+        colorRango = 'Amarillo';
+        if (0 <= reservas && reservas <= 3.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 0-(0.5*0.1) <= reservas && reservas <= 0.50+(0.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (0 <= reservas && reservas <= 0.50){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 0-(0.90*0.1) <= reservas && reservas <= 0.90+(0.90*0.1)) {
+        colorRango = 'Amarillo';
+        if (0 <= reservas && reservas <= 0.90){
+          colorRango = 'Verde';
+        }
+      }
+    } 
+    else if (calificacion === 'A-2') {
+      if (indicadorL === '10' && 2.0-(1*0.1) < reservas && reservas <= 3.0+(1*0.1)) {
+        colorRango = 'Amarillo';
+        if (2.0 < reservas && reservas <= 3.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 3.0-(2*0.1) < reservas && reservas <= 5.0+(2*0.1)) {
+        colorRango = 'Amarillo';
+        if (3.0 < reservas && reservas <= 5.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 0.50-(0.25*0.1) < reservas && reservas <= 0.75+(0.25*0.1)) {
+        colorRango = 'Amarillo';
+        if (0.50 < reservas && reservas <= 0.75){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 0.90-(0.6*0.1) < reservas && reservas <= 1.5+(0.6*0.1)) {
+        colorRango = 'Amarillo';
+        if (0.90 < reservas && reservas <= 1.5){
+          colorRango = 'Verde';
+        }
+      }
+    } 
+    else if (calificacion === 'B-1') {
+      if (indicadorL === '10' && 3.0-(1*0.1) < reservas && reservas <= 4.0+(1*0.1)) {
+        colorRango = 'Amarillo';
+        if (3.0 < reservas && reservas <= 4.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 5.0-(1.5*0.1) < reservas && reservas <= 6.5+(1.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (5.0 < reservas && reservas <= 6.5){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 0.75-(0.25*0.1) < reservas && reservas <= 1.0+(0.25*0.1)) {
+        colorRango = 'Amarillo';
+        if (0.75 < reservas && reservas <= 1.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 1.5-(0.5*0.1) < reservas && reservas <= 2.0+(0.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (1.5 < reservas && reservas <= 2.0){
+          colorRango = 'Verde';
+        }
+      }
+    } 
+    else if (calificacion === 'B-2') {
+      if (indicadorL === '10' && 4.0-(1*0.1) < reservas && reservas <= 5.0+(1*0.1)) {
+        colorRango = 'Amarillo';
+        if (4.0 < reservas && reservas <= 5.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 6.5-(1.5*0.1) < reservas && reservas <= 8.0+(1.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (6.5 < reservas && reservas <= 8.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 1.0-(0.5*0.1) < reservas && reservas <= 1.5+(0.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (1.0 < reservas && reservas <= 1.5){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 2.0-(0.5*0.1) < reservas && reservas <= 2.5+(0.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (2.0 < reservas && reservas <= 2.5){
+          colorRango = 'Verde';
+        }
+      }
+    } 
+    else if (calificacion === 'B-3') {
+      if (indicadorL === '10' && 5.0-(1*0.1) < reservas && reservas <= 6.0+(1*0.1)) {
+        colorRango = 'Amarillo';
+        if (5.0 < reservas && reservas <= 6.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 8.0-(2*0.1) < reservas && reservas <= 10.0+(2*0.1)) {
+        colorRango = 'Amarillo';
+        if (8.0 < reservas && reservas <= 10.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 1.5-(0.5*0.1) < reservas && reservas <= 2.0+(0.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (1.5 < reservas && reservas <= 2.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 2.5-(2.5*0.1) < reservas && reservas <= 5.0+(2.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (2.5 < reservas && reservas <= 5.0){
+          colorRango = 'Verde';
+        }
+      }
+    } 
+    else if (calificacion === 'C-1') {
+      if (indicadorL === '10' && 6.0-(2*0.1) < reservas && reservas <= 8.0+(2*0.1)) {
+        colorRango = 'Amarillo';
+        if (6.0 < reservas && reservas <= 8.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 10.0-(5*0.1) < reservas && reservas <= 15.0+(5*0.1)) {
+        colorRango = 'Amarillo';
+        if (10.0 < reservas && reservas <= 15.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 2.0-(3*0.1) < reservas && reservas <= 5.0+(3*0.1)) {
+        colorRango = 'Amarillo';
+        if (2.0 < reservas && reservas <= 5.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 5.0-(5*0.1) < reservas && reservas <= 10.0+(5*0.1)) {
+        colorRango = 'Amarillo';
+        if (5.0 < reservas && reservas <= 10.0){
+          colorRango = 'Verde';
+        }
+      }
+    } 
+    else if (calificacion === 'C-2') {
+      if (indicadorL === '10' && 8.0-(7*0.1) < reservas && reservas <= 15.0+(7*0.1)) {
+        colorRango = 'Amarillo';
+        if (8.0 < reservas && reservas <= 15.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 15.0-(20*0.1) < reservas && reservas <= 35.0+(20*0.1)) {
+        colorRango = 'Amarillo';
+        if (15.0 < reservas && reservas <= 35.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 5.0-(5*0.1) < reservas && reservas <= 10.0+(5*0.1)) {
+        colorRango = 'Amarillo';
+        if (5.0 < reservas && reservas <= 10.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 10.0-(5.5*0.1) < reservas && reservas <= 15.5+(5.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (10.0 < reservas && reservas <= 15.5){
+          colorRango = 'Verde';
+        }
+      }
+    } 
+    else if (calificacion === 'D') {
+      if (indicadorL === '10' && 15.0-(20*0.1) < reservas && reservas <= 35.0+(20*0.1)) {
+        colorRango = 'Amarillo';
+        if (15.0 < reservas && reservas <= 35.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 35.0-(40*0.1) < reservas && reservas <= 75.0+(40*0.1)) {
+        colorRango = 'Amarillo';
+        if (35.0 < reservas && reservas <= 75.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 10.0-(30*0.1) < reservas && reservas <= 40.0+(30*0.1)) {
+        colorRango = 'Amarillo';
+        if (10.0 < reservas && reservas <= 40.0){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 15.5-(29.5*0.1) < reservas && reservas <= 45.0+(29.5*0.1)) {
+        colorRango = 'Amarillo';
+        if (15.5 < reservas && reservas <= 45.0){
+          colorRango = 'Verde';
+        }
+      }
+    } 
+    else if (calificacion === 'E') {
+      if (indicadorL === '10' && 35.0+(35*0.1) < reservas) {
+        colorRango = 'Amarillo';
+        if (35.0 < reservas){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '20' && 75.0+(75*0.1) < reservas) {
+        colorRango = 'Amarillo';
+        if (75.0 < reservas){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '30' && 40.0+(40*0.1) < reservas) {
+        colorRango = 'Amarillo';
+        if (40.0 < reservas){
+          colorRango = 'Verde';
+        }
+      } else if (indicadorL === '40' && 45.0+(45*0.1) < reservas) {
+        colorRango = 'Amarillo';
+        if (45.0 < reservas){
+          colorRango = 'Verde';
+        }
+      }
+    }
+    this.rango = colorRango;
+    
   }
 
   ocultarCard() {
@@ -305,9 +558,10 @@ export class HomeComponent implements OnInit {
     this.alert = false;
     this.requerido = false;
     this.bottom.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
   }
 
-  showDialog() {
+  showTabla() {
     this.visible = true;
   }
 
@@ -331,9 +585,7 @@ export class HomeComponent implements OnInit {
   }
   
   generadorPDF(){
-    this.requerido2 = true;
-    if (this.prospectoForm.valid) {
-      this.alert2 = false;
+
       var fechaActual = new Date().toLocaleString();
       const totalBetaFormatted = this.totalBeta.toFixed(2);
       const probabilidadIncumplimiento = this.respuestaData.resultado.totalizadores.probabilidadIncumplimiento;
@@ -364,8 +616,8 @@ export class HomeComponent implements OnInit {
               style: 'table',
               headerRows: 1,
               body:[
-                [{ text: 'Ejecutivo de negocios', style: 'tableHeader2', colSpan: 2 },''],
-                ['Nombre:', { text: this.prospectoForm.get('nombreEjecutivo')?.value},]
+                [{ text: 'Ejecutivo de negocios', style: 'tableHeader2', colSpan: 4 },'','',''],
+                ['Nombre:', { text: this.calculatorForm.get('nombreEjecutivo')?.value}, { text: this.calculatorForm.get('apellido1Ejecutivo')?.value}, { text: this.calculatorForm.get('apellido2Ejecutivo')?.value}]
               ]
             },
             layout: 'noBorders'
@@ -378,11 +630,11 @@ export class HomeComponent implements OnInit {
               style: 'table',
               headerRows: 1,
               body:[
-                [{ text: 'Prospecto', style: 'tableHeader2', colSpan: 2},''],
-                ['Nombre:', { text: this.prospectoForm.get('nombreProspecto')?.value}],
-                ['Teléfono:', { text: this.prospectoForm.get('telProspecto')?.value}],
-                ['Email:', { text: this.prospectoForm.get('emailProspecto')?.value}],
-                ['Dirección:', { text: this.prospectoForm.get('direccionProspecto')?.value},]
+                [{ text: 'Prospecto', style: 'tableHeader2', colSpan: 4},'', '', ''],
+                ['Nombre:', { text: this.calculatorForm.get('nombreProspecto')?.value}, { text: this.calculatorForm.get('apellido1Prospecto')?.value}, { text: this.calculatorForm.get('apellido2Prospecto')?.value}],
+                ['Teléfono:', { text: this.calculatorForm.get('telProspecto')?.value}, '', ''],
+                ['Email:', { text: this.calculatorForm.get('emailProspecto')?.value}, '', ''],
+                ['Dirección:', { text: this.calculatorForm.get('direccionProspecto')?.value}, '', '']
               ]
             },
             layout: 'noBorders'
@@ -479,12 +731,6 @@ export class HomeComponent implements OnInit {
       // pdfMake.createPdf(pdf).download('Evaluación.pdf');
       pdfMake.createPdf(pdf).open();
 
-    } else {
-      this.alert2 = true;
-      setTimeout(() => {
-        this.bottom.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      this.delayTime});
-    }
   }
 
 }

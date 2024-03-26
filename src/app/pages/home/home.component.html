@@ -8,7 +8,123 @@
     <h1 class="animate__animated animate__jackInTheBox animate__slow"><strong>Unión de Crédito General</strong></h1>
     <h3><strong>Calculadora PI</strong></h3>
     <br>
+
     <form [formGroup]="calculatorForm" (ngSubmit)="btnEvaluar()">
+
+      <div class="row rowContainer">
+
+        <div>
+          <label class="color1 colMargen"><strong>Prospecto:</strong></label>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen">
+          <span class="p-float-label">
+            <input pInputText formControlName="nombreProspecto"/>
+            <label>Nombre</label>
+          </span>
+          <span *ngIf="calculatorForm.get('nombreProspecto')?.touched && calculatorForm.get('nombreProspecto')?.invalid || requerido && calculatorForm.get('nombreProspecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen">
+          <span class="p-float-label">
+            <input pInputText formControlName="apellido1Prospecto"/>
+            <label>Apellido paterno</label>
+          </span>
+          <span *ngIf="calculatorForm.get('apellido1Prospecto')?.touched && calculatorForm.get('apellido1Prospecto')?.invalid || requerido && calculatorForm.get('apellido1Prospecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen">
+          <span class="p-float-label">
+            <input pInputText formControlName="apellido2Prospecto"/>
+            <label>Apellido materno</label>
+          </span>
+          <span *ngIf="calculatorForm.get('apellido2Prospecto')?.touched && calculatorForm.get('apellido2Prospecto')?.invalid || requerido && calculatorForm.get('apellido2Prospecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+        
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen">
+          <span class="p-float-label">
+            <input pInputText formControlName="emailProspecto"/>
+            <label>Email</label>
+          </span>
+          <span *ngIf="calculatorForm.get('emailProspecto')?.touched && calculatorForm.get('emailProspecto')?.invalid || requerido && calculatorForm.get('emailProspecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen">
+          <span class="p-float-label">
+            <p-inputNumber inputId="integeronly" [useGrouping]="false" formControlName="telProspecto"></p-inputNumber>
+            <label>Teléfono</label>
+          </span>
+          <span *ngIf="calculatorForm.get('telProspecto')?.touched && calculatorForm.get('telProspecto')?.invalid || requerido && calculatorForm.get('telProspecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen">
+          <span class="p-float-label">
+            <input pInputText formControlName="direccionProspecto"/>
+            <label>Dirección</label>
+          </span>
+          <span *ngIf="calculatorForm.get('direccionProspecto')?.touched && calculatorForm.get('direccionProspecto')?.invalid || requerido && calculatorForm.get('direccionProspecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-xl-6 p-fluid colMargen">
+          <span class="p-float-label">
+            <p-inputNumber formControlName="monto" inputId="currency-us" mode="currency" currency="USD" locale="en-US"> </p-inputNumber>
+            <label>Monto de crédito solicitado</label>
+          </span>
+          <span *ngIf="calculatorForm.get('monto')?.touched && calculatorForm.get('monto')?.invalid || requerido && calculatorForm.get('monto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div>
+          <label class="color1 colMargen"><strong>Ejecutivo de negocios:</strong></label>
+        </div>
+
+        <div class="col-12 col-md-4 p-fluid colMargen">
+          <span class="p-float-label">
+            <input pInputText formControlName="nombreEjecutivo"/>
+            <label>Nombre</label>
+          </span>
+          <span *ngIf="calculatorForm.get('nombreEjecutivo')?.touched && calculatorForm.get('nombreEjecutivo')?.invalid || requerido && calculatorForm.get('nombreEjecutivo')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 p-fluid colMargen">
+          <span class="p-float-label">
+            <input pInputText formControlName="apellido1Ejecutivo"/>
+            <label>Apellido paterno</label>
+          </span>
+          <span *ngIf="calculatorForm.get('apellido1Ejecutivo')?.touched && calculatorForm.get('apellido1Ejecutivo')?.invalid || requerido && calculatorForm.get('apellido1Ejecutivo')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 p-fluid colMargen">
+          <span class="p-float-label">
+            <input pInputText formControlName="apellido2Ejecutivo"/>
+            <label>Apellido materno</label>
+          </span>
+          <span *ngIf="calculatorForm.get('apellido2Ejecutivo')?.touched && calculatorForm.get('apellido2Ejecutivo')?.invalid || requerido && calculatorForm.get('apellido2Ejecutivo')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+      </div>
+
+      <br>
+    
       <div class="row justify-content-around">
 
         <div class="col-12 col-lg-5 form-group">
@@ -56,8 +172,6 @@
                   </tbody>
                 </table>
               </div>
-
-              
             </div>
 
           </div>
@@ -406,7 +520,7 @@
         </div>
 
         <div class="col-12 col-lg-5 boton-margin">
-          <div class="d-grid col-top2">
+          <div class="d-grid btnEvaluar">
             <button type="submit" class="boton-style1" >
               Evaluar
             </button>
@@ -429,91 +543,17 @@
   </div>
   <br><br>
 
-  <div class="content " [ngClass]="{'show': mostrarDetalles}">
+  <div class="content collapse" [ngClass]="{'show': mostrarDetalles}">
     <div class="card mb-3" >
       <div class="card-header d-flex">
         <button class="btn-close ms-auto" (click)="ocultarCard()"></button>
       </div>
 
       <div class="row g-0">
-
         
           <div class="col-12 col-lg-6">
             <div class="card-body">
-              <div class="list-group">
-                <form [formGroup]="prospectoForm" (ngSubmit)="generadorPDF()">
-                  <div class="list-group-item">
-                    <h5 class="mb-1">Prospecto:</h5>
-                    <br>
-                    <div class="row">
-    
-                      <div class="col">
-                        <span class="p-float-label">
-                          <input pInputText formControlName="nombreProspecto"/>
-                          <label>Nombre completo</label>
-                        </span>
-                        <span *ngIf="prospectoForm.get('nombreProspecto')?.touched && prospectoForm.get('nombreProspecto')?.invalid || requerido2 && prospectoForm.get('nombreProspecto')?.invalid" class="input_error">
-                          ** Campo requerido
-                        </span>
-                      </div>
-    
-                      <div class="col">
-                        <span class="p-float-label">
-                          <input pInputText formControlName="emailProspecto"/>
-                          <label>Email</label>
-                        </span>
-                        <span *ngIf="prospectoForm.get('emailProspecto')?.touched && prospectoForm.get('emailProspecto')?.invalid || requerido2 && prospectoForm.get('emailProspecto')?.invalid" class="input_error">
-                          ** Campo requerido
-                        </span>
-                      </div>
-    
-                    </div>
-                    <br>
-                    <div class="row">
-    
-                      <div class="col">
 
-                        <span class="p-float-label">
-                          <p-inputNumber inputId="integeronly" [useGrouping]="false" formControlName="telProspecto"></p-inputNumber>
-                          <label>Teléfono</label>
-                        </span>
-                        <span *ngIf="prospectoForm.get('telProspecto')?.touched && prospectoForm.get('telProspecto')?.invalid || requerido2 && prospectoForm.get('telProspecto')?.invalid" class="input_error">
-                          ** Campo requerido
-                        </span>
-                      </div>
-    
-                      <div class="col">
-                        <span class="p-float-label">
-                          <input pInputText formControlName="direccionProspecto"/>
-                          <label>Dirección</label>
-                        </span>
-                        <span *ngIf="prospectoForm.get('direccionProspecto')?.touched && prospectoForm.get('direccionProspecto')?.invalid || requerido2 && prospectoForm.get('direccionProspecto')?.invalid" class="input_error">
-                          ** Campo requerido
-                        </span>
-                      </div>
-    
-                    </div>
-                  </div>
-    
-                  <div class="list-group-item">
-                    <h5 class="mb-1">Ejecutivo de negocios:</h5>
-                    <br>
-                    <div class="row">
-    
-                      <div class="col">
-                        <span class="p-float-label">
-                          <input pInputText formControlName="nombreEjecutivo"/>
-                          <label>Nombre completo</label>
-                        </span>
-                        <span *ngIf="prospectoForm.get('nombreEjecutivo')?.touched && prospectoForm.get('nombreEjecutivo')?.invalid || requerido2 && prospectoForm.get('nombreEjecutivo')?.invalid" class="input_error">
-                          ** Campo requerido
-                        </span>
-                      </div>
-    
-                    </div>
-                  </div>
-                </form>
-              </div>
             </div>
           </div>
 
@@ -549,7 +589,9 @@
                     </tr>
                     <tr>
                       <td><strong>Puntaje</strong></td>
-                      <td class="center">{{respuestaData.resultado.totalizadores.puntuaje}}</td>
+                      <td class="center" [ngClass]="{'verde': rango === 'Verde','amarillo': rango === 'Amarillo', 'rojo': rango === 'Rojo'}">
+                        {{respuestaData.resultado.totalizadores.puntuaje}}
+                      </td>
                     </tr>
                     <tr>
                       <td><strong>% Reservas</strong></td>
@@ -566,7 +608,7 @@
 
           <div class="col-12 col-lg-6">
             <div class="card-body center">
-              <button type="button" class=" boton-style2" (click)="showDialog()">
+              <button type="button" class=" boton-style2" (click)="showTabla()">
                 Tabla de porcentaje de reservas preventivas
               </button>
             </div>
@@ -580,16 +622,6 @@
             </div>
           </div>
         
-
-      </div>
-
-      <div class="collapse" [ngClass]="{'show' : alert2}">
-        <div class="alert alert-danger text-center" role="alert">
-          <i class="bi bi-exclamation-triangle margin-icon"></i>
-          <label>
-            ¡Los datos del prospecto y el ejecutivo son necesarios!
-          </label>
-        </div>
       </div>
 
     </div>

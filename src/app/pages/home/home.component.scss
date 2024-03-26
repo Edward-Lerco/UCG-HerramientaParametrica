@@ -4,7 +4,7 @@
   padding-bottom: 2%;
   padding-right: 4%;
 }
-.content {
+.content{
   background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
@@ -37,10 +37,7 @@ label{
 .row1{
   margin-top: 3%;
 }
-.input-margin {
-  border: 1px solid #402b57;
-}
-.d-grid{
+.btnEvaluar{
   margin-top: 1%;
 }
 .margin-icon{
@@ -69,4 +66,20 @@ label{
 }
 .center{
     text-align: center;
+}
+.colMargen{
+  margin-bottom: 25px;
+}
+.rowContainer{
+  padding-left: 4%;
+  padding-right: 2%;
+}
+.verde{
+  background-color: green;
+}
+.rojo{
+  background-color: red;
+}
+.amarillo{
+  background-color: yellow;
 }
