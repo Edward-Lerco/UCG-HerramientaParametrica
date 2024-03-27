@@ -7,8 +7,9 @@
     <h1 class="animate__animated animate__jackInTheBox animate__slow h1-margin"><strong>Herramienta Paramétrica</strong></h1>
     <h1 class="animate__animated animate__jackInTheBox animate__slow"><strong>Unión de Crédito General</strong></h1>
     <h3><strong>Calculadora PI</strong></h3>
-    <br>
-
+    <div class="d-flex rowContainer">
+      <button type="button" class="btn btnLimpiar ms-auto btn-sm" (click)="ocultarCard()"><i class="bi bi-eraser"></i> Limpiar</button>
+    </div>
     <form [formGroup]="calculatorForm" (ngSubmit)="btnEvaluar()">
 
       <div class="row rowContainer">
@@ -86,7 +87,7 @@
             ** Campo requerido
           </span>
         </div>
-
+        <hr>
         <div>
           <label class="color1 colMargen"><strong>Ejecutivo de negocios:</strong></label>
         </div>
@@ -123,6 +124,7 @@
 
       </div>
 
+      <hr>
       <br>
     
       <div class="row justify-content-around">
@@ -544,83 +546,139 @@
   <br><br>
 
   <div class="content collapse" [ngClass]="{'show': mostrarDetalles}">
-    <div class="card mb-3" >
-      <div class="card-header d-flex">
-        <button class="btn-close ms-auto" (click)="ocultarCard()"></button>
+    <div class="card mb-3">
+      <div class="card-header">
+        <div class="d-flex rowContainer">
+          <button type="button" class="btn btnLimpiar ms-auto btn-sm" (click)="ocultarCard()"><i class="bi bi-eraser"></i> Limpiar</button>
+        </div>
       </div>
 
-      <div class="row g-0">
+      <div class="row align-items-center">
         
-          <div class="col-12 col-lg-6">
-            <div class="card-body">
-
+        <div class="col-12 col-lg-6">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" class="center">ATRIBUTO</th>
+                    <th scope="col" class="center">BETA</th>
+                    <th scope="col" class="center">PUNTAJE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="center">{{getValueSelect('indicador_a', 'name')}}</td>
+                    <td class="center">{{getValueSelect('indicador_a', 'beta')}}</td>
+                    <td class="center">{{getValueSelect('indicador_a', 'puntaje')}}</td>
+                  </tr>
+                  <tr>
+                    <td class="center">{{getValueSelect('indicador_b', 'name')}}</td>
+                    <td class="center">{{getValueSelect('indicador_b', 'beta')}}</td>
+                    <td class="center">{{getValueSelect('indicador_b', 'puntaje')}}</td>
+                  </tr>
+                  <tr>
+                    <td class="center">{{getValueSelect('indicador_c', 'name')}}</td>
+                    <td class="center">{{getValueSelect('indicador_c', 'beta')}}</td>
+                    <td class="center">{{getValueSelect('indicador_c', 'puntaje')}}</td>
+                  </tr>
+                  <tr>
+                    <td class="center">{{getValueSelect('indicador_d', 'name')}}</td>
+                    <td class="center">{{getValueSelect('indicador_d', 'beta')}}</td>
+                    <td class="center">{{getValueSelect('indicador_d', 'puntaje')}}</td>
+                  </tr>
+                  <tr>
+                    <td class="center">{{getValueSelect('indicador_e', 'name')}}</td>
+                    <td class="center">{{getValueSelect('indicador_e', 'beta')}}</td>
+                    <td class="center">{{getValueSelect('indicador_e', 'puntaje')}}</td>
+                  </tr>
+                  <tr>
+                    <td class="center">{{convertirMoneda('indicador_f')}}</td>
+                    <td class="center">{{getValueInput('indicador_f')?.beta}}</td>
+                    <td class="center">{{getValueInput('indicador_f')?.puntaje}}</td>
+                  </tr><tr>
+                    <td class="center">{{getValueInput('indicador_g')?.name}}</td>
+                    <td class="center">{{getValueInput('indicador_g')?.beta}}</td>
+                    <td class="center">{{getValueInput('indicador_g')?.puntaje}}</td>
+                  </tr>
+                  <tr>
+                    <td class="center">{{convertirPorcentaje('indicador_h')}}</td>
+                    <td class="center">{{getValueInput('indicador_h')?.beta}}</td>
+                    <td class="center">{{getValueInput('indicador_h')?.puntaje}}</td>
+                  </tr>
+                  <tr>
+                    <td class="center">{{convertirPorcentaje('indicador_i')}}</td>
+                    <td class="center">{{getValueInput('indicador_i')?.beta}}</td>
+                    <td class="center">{{getValueInput('indicador_i')?.puntaje}}</td>
+                  </tr>
+                  <tr>
+                    <td class="center"><strong>Total</strong></td>
+                    <td class="center">{{ totalBeta | number:'1.2-2' }}</td>
+                    <td class="center">{{ totalPuntaje }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
+        </div>
 
-          <div class="col-12 col-lg-6">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col"></th>
-                      <th scope="col" class="center">BETA</th>
-                      <th scope="col" class="center">PUNTAJE</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>Total</strong></td>
-                      <td class="center">{{ totalBeta | number:'1.2-2' }}</td>
-                      <td class="center">{{ totalPuntaje }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+        <div class="col-12 col-lg-6">
+          <div class="card-body">
+            <h3 class="center"><strong>Resultado de la evaluación</strong></h3>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <tbody>
+                  <tr>
+                    <td><strong>Monto de crédito solicitado</strong></td>
+                    <td class="center">{{calculatorForm.get('monto')?.value | currency}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Probabilidad de Incumplimiento</strong></td>
+                    <td class="center">{{respuestaData.resultado.totalizadores.probabilidadIncumplimiento}}%</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Puntaje</strong></td>
+                    <td class="center">
+                      {{respuestaData.resultado.totalizadores.puntuaje}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>% Reservas</strong></td>
+                    <td class="center">{{respuestaData.resultado.totalizadores.reservaPerdida}}%</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Reserva preventiva</strong></td>
+                    <td class="center">{{calculatorForm.get('monto')?.value*respuestaData.resultado.totalizadores.reservaPerdida | currency}}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Calificación</strong></td>
+                    <td class="center">{{respuestaData.resultado.totalizadores.calificacion}}</td>
+                  </tr>
+              </table>
             </div>
-
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td><strong>Probabilidad de Incumplimiento</strong></td>
-                      <td class="center">{{respuestaData.resultado.totalizadores.probabilidadIncumplimiento}}%</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Puntaje</strong></td>
-                      <td class="center" [ngClass]="{'verde': rango === 'Verde','amarillo': rango === 'Amarillo', 'rojo': rango === 'Rojo'}">
-                        {{respuestaData.resultado.totalizadores.puntuaje}}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><strong>% Reservas</strong></td>
-                      <td class="center">{{respuestaData.resultado.totalizadores.reservaPerdida}}%</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Calificación</strong></td>
-                      <td class="center">{{respuestaData.resultado.totalizadores.calificacion}}</td>
-                    </tr>
-                </table>
-              </div>
+            <div class="alert text-center" role="alert" [ngClass]="{'verde': rango === '¡Aprobado!','amarillo': rango === '¡Evaluar!', 'rojo': rango === '¡Rechazado!'}">
+              <label >
+                {{rango}}
+              </label>
             </div>
           </div>
+        </div>
 
-          <div class="col-12 col-lg-6">
-            <div class="card-body center">
-              <button type="button" class=" boton-style2" (click)="showTabla()">
-                Tabla de porcentaje de reservas preventivas
-              </button>
-            </div>
+        <div class="col-12 col-lg-6">
+          <div class="card-body center">
+            <button type="button" class=" boton-style2" (click)="showTabla()">
+              Tabla de porcentaje de reservas preventivas
+            </button>
           </div>
+        </div>
 
-          <div class="col-12 col-lg-6">
-            <div class="card-body center">
-              <button type="submit" class="boton-style2" (click)="generadorPDF()">
-                Descargar Evaluación
-              </button>
-            </div>
+        <div class="col-12 col-lg-6">
+          <div class="card-body center">
+            <button type="submit" class="boton-style2" (click)="generadorPDF()">
+              Descargar Evaluación
+            </button>
           </div>
+        </div>
         
       </div>
 

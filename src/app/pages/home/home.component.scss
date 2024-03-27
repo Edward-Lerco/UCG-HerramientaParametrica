@@ -76,10 +76,29 @@ label{
 }
 .verde{
   background-color: green;
+  color: white;
+  border-radius: 10px;
 }
 .rojo{
   background-color: red;
+  color: white;
+  border-radius: 10px;
 }
 .amarillo{
   background-color: yellow;
+  color: black;
+  border-radius: 10px;
+}
+.btnLimpiar{
+  color: #3e597b;
+  border: solid #3e597b 1px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btnLimpiar:hover {
+  background-color: #402b57;
+  color: white;
+}
+.sizeLetra{
+  font-size: 30px;
 }
