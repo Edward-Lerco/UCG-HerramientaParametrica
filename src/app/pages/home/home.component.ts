@@ -160,8 +160,8 @@ export class HomeComponent implements OnInit {
     this.indicador_d = [
       { name: '0 créditos',               code: '0',           beta: '1.69',  puntaje: '40',  icon:'assets/icons/creditos.png'},
       { name: 'De 1 a 2 créditos',        code: '1',           beta: '-0.93', puntaje: '116', icon:'assets/icons/creditos.png'},
-      { name: 'De 3 a 5 créditos',        code: '3',           beta: '1.83',  puntaje: '36',  icon:'assets/icons/creditos.png'},
-      { name: 'Mayor a 5 créditos',       code: '5',           beta: '1.99',  puntaje: '32',  icon:'assets/icons/creditos.png'},
+      { name: 'De 3 a 5 créditos',        code: '4',           beta: '1.83',  puntaje: '36',  icon:'assets/icons/creditos.png'},
+      { name: 'Mayor a 5 créditos',       code: '6',           beta: '1.99',  puntaje: '32',  icon:'assets/icons/creditos.png'},
     ];
     this.indicador_e = [
       { name: 'No tiene atrasos',         code: '10',          beta: '-0.87', puntaje: '114', icon:'assets/icons/no-atraso.png'},
@@ -414,7 +414,7 @@ export class HomeComponent implements OnInit {
 
   convertirMoneda1(){
     const monto = this.calculatorForm.value.monto;
-    const reserva = this.calculatorForm.get('monto')?.value*this.respuestaData.resultado.totalizadores.reservaPerdida
+    const reserva = this.calculatorForm.get('monto')?.value*(this.respuestaData.resultado.totalizadores.reservaPerdida*0.01)
     this.montoEnMoneda = monto.toLocaleString('es-MX', {
       style: 'currency',
       currency: 'MXN',
@@ -500,16 +500,16 @@ export class HomeComponent implements OnInit {
           },
           layout: 'noBorders'
         },
-        {
-          table:{
-            style: 'table',
-            headerRows: 1,
-            body:[
-              ['Monto de crédito solicitado:', { text: this.montoEnMoneda}],
-            ]
-          },
-          layout: 'noBorders'
-        },
+        // {
+        //   table:{
+        //     style: 'table',
+        //     headerRows: 1,
+        //     body:[
+        //       ['Monto de crédito solicitado:', { text: this.montoEnMoneda}],
+        //     ]
+        //   },
+        //   layout: 'noBorders'
+        // },
         
         { text: '\n'},
         
@@ -550,6 +550,7 @@ export class HomeComponent implements OnInit {
                 headerRows: 1,
                 body: [
                   [{text: 'Resultado de la evaluación', style: 'tableHeader', colSpan: 2},''],
+                  [{text: 'Monto de crédito solicitado'},    { text: this.montoEnMoneda, alignment: 'center', bold: true }],
                   [{text: 'Probabilidad de Incumplimiento'}, { text: probabilidadEnPorcentaje, alignment: 'center', bold: true }],
                   [{text: 'Puntaje'},                        { text: this.respuestaData.resultado.totalizadores.puntuaje, alignment: 'center', bold: true }],
                   [{text: 'Severidad de la Pérdida'},        { text: this.convertirPorcentaje('indicador_k'), alignment: 'center', bold: true }],
@@ -566,8 +567,8 @@ export class HomeComponent implements OnInit {
               }
             },
             {
-              text: this.rango,
-              style: this.getStyleForRango(this.rango)
+              // text: this.rango,
+              // style: this.getStyleForRango(this.rango)
             }
           ]
         }

@@ -58,10 +58,6 @@
         </div>
 
         <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen">
-          <!-- <span class="p-float-label">
-            <p-inputNumber inputId="integeronly" [useGrouping]="false" formControlName="telProspecto"></p-inputNumber>
-            <label>Teléfono</label>
-          </span> -->
           <span class="p-float-label">
             <p-inputMask mask="(999) 999-9999" id="ssn_input" formControlName="telProspecto"></p-inputMask>
             <label htmlFor="ssn_input">Teléfono</label>
@@ -126,10 +122,8 @@
         </div>
 
       </div>
-
       <hr>
       <br>
-    
       <div class="row justify-content-around">
 
         <div class="col-12 col-lg-5 form-group">
@@ -548,7 +542,7 @@
   </div>
   <br><br>
 
-  <div class="content collapse" [ngClass]="{'show': mostrarDetalles}">
+  <div class="content " [ngClass]="{'show': mostrarDetalles}">
     <div class="card mb-3">
       <div class="card-header">
         <div class="d-flex rowContainer">
@@ -646,6 +640,12 @@
                     </td>
                   </tr>
                   <tr>
+                    <td><strong>Severidad de la Pérdida</strong></td>
+                    <td class="center">
+                      {{convertirPorcentaje('indicador_k')}}
+                    </td>
+                  </tr>
+                  <tr>
                     <td><strong>% Reservas</strong></td>
                     <td class="center">{{respuestaData.resultado.totalizadores.reservaPerdida}}%</td>
                   </tr>
@@ -654,16 +654,20 @@
                     <td class="center">{{reservaP}}</td>
                   </tr>
                   <tr>
+                    <td><strong>Tipo de crédito</strong></td>
+                    <td class="center">{{getValueSelect('indicador_l', 'name')}}</td>
+                  </tr>
+                  <tr>
                     <td><strong>Calificación</strong></td>
                     <td class="center">{{respuestaData.resultado.totalizadores.calificacion}}</td>
                   </tr>
               </table>
             </div>
-            <div class="alert text-center" role="alert" [ngClass]="{'verde': rango === '¡Aprobado!','amarillo': rango === '¡Evaluar!', 'rojo': rango === '¡Rechazado!'}">
+            <!-- <div class="alert text-center" role="alert" [ngClass]="{'verde': rango === '¡Aprobado!','amarillo': rango === '¡Evaluar!', 'rojo': rango === '¡Rechazado!'}">
               <label >
                 {{rango}}
               </label>
-            </div>
+            </div> -->
           </div>
         </div>
 
