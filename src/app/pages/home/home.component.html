@@ -6,7 +6,6 @@
     <br>
     <h1 class="animate__animated animate__jackInTheBox animate__slow h1-margin"><strong>Calculadora de Probabilidad</strong></h1>
     <h1 class="animate__animated animate__jackInTheBox animate__slow"><strong>de Incumplimiento</strong></h1>
-    <!-- <h3><strong>Calculadora PI</strong></h3> -->
     <div class="d-flex rowContainer">
       <button type="button" class="btn btnLimpiar ms-auto btn-sm" (click)="ocultarCard()"><i class="bi bi-eraser"></i> Limpiar</button>
     </div>
@@ -59,9 +58,13 @@
         </div>
 
         <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen">
-          <span class="p-float-label">
+          <!-- <span class="p-float-label">
             <p-inputNumber inputId="integeronly" [useGrouping]="false" formControlName="telProspecto"></p-inputNumber>
             <label>Teléfono</label>
+          </span> -->
+          <span class="p-float-label">
+            <p-inputMask mask="(999) 999-9999" id="ssn_input" formControlName="telProspecto"></p-inputMask>
+            <label htmlFor="ssn_input">Teléfono</label>
           </span>
           <span *ngIf="calculatorForm.get('telProspecto')?.touched && calculatorForm.get('telProspecto')?.invalid || requerido && calculatorForm.get('telProspecto')?.invalid" class="input_error">
             ** Campo requerido
@@ -593,7 +596,7 @@
                     <td class="center">{{getValueSelect('indicador_e', 'puntaje')}}</td>
                   </tr>
                   <tr>
-                    <td class="center">{{convertirMoneda('indicador_f')}}</td>
+                    <td class="center">{{convertirIndicador('indicador_f')}}</td>
                     <td class="center">{{getValueInput('indicador_f')?.beta}}</td>
                     <td class="center">{{getValueInput('indicador_f')?.puntaje}}</td>
                   </tr><tr>
@@ -613,7 +616,7 @@
                   </tr>
                   <tr>
                     <td class="center"><strong>Total</strong></td>
-                    <td class="center">{{totalBeta}}</td>
+                    <td class="center">{{totalBeta | number:'1.2-2'}}</td>
                     <td class="center">{{respuestaData.resultado.totalizadores.puntuaje}}</td>
                   </tr>
                 </tbody>
@@ -630,7 +633,7 @@
                 <tbody>
                   <tr>
                     <td><strong>Monto de crédito solicitado</strong></td>
-                    <td class="center">{{calculatorForm.get('monto')?.value | currency}}</td>
+                    <td class="center">{{montoEnMoneda}}</td>
                   </tr>
                   <tr>
                     <td><strong>Probabilidad de Incumplimiento</strong></td>
@@ -648,7 +651,7 @@
                   </tr>
                   <tr>
                     <td><strong>Reserva preventiva</strong></td>
-                    <td class="center">{{calculatorForm.get('monto')?.value*respuestaData.resultado.totalizadores.reservaPerdida | currency}}</td>
+                    <td class="center">{{reservaP}}</td>
                   </tr>
                   <tr>
                     <td><strong>Calificación</strong></td>

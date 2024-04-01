@@ -88,6 +88,7 @@ export class HomeComponent implements OnInit {
   requerido = false;
   rango: string = '';
   montoEnMoneda: string = '';
+  reservaP: string = ''
 
   resultadoData: Item[] = [];
 
@@ -296,7 +297,8 @@ export class HomeComponent implements OnInit {
         this.respuestaData = rsp;
         this.calificacion();
         this.sumarBetas();
-        this.convertirMonto();
+        this.convertirIndicador;
+        this.convertirMoneda1();
       }
     });
   }
@@ -391,7 +393,7 @@ export class HomeComponent implements OnInit {
     this.visible = true;
   }
 
-  convertirMoneda(indicador: string): string | undefined {
+  convertirIndicador(indicador: string): string | undefined {
     const valor = this.getValueInput(indicador)?.name;
     if (valor) {
       const numero = parseFloat(valor);
@@ -410,16 +412,18 @@ export class HomeComponent implements OnInit {
     return undefined;
   }
 
-  convertirMonto(){
+  convertirMoneda1(){
     const monto = this.calculatorForm.value.monto;
+    const reserva = this.calculatorForm.get('monto')?.value*this.respuestaData.resultado.totalizadores.reservaPerdida
     this.montoEnMoneda = monto.toLocaleString('es-MX', {
       style: 'currency',
       currency: 'MXN',
     });
-    console.log(this.montoEnMoneda);
+    this.reservaP = reserva.toLocaleString('es-MX', {
+      style: 'currency',
+      currency: 'MXN',
+    });
   }
-
-
 
   getStyleForRango(rango: string): string {
     switch (rango) {
@@ -436,7 +440,7 @@ export class HomeComponent implements OnInit {
   
   generadorPDF(){
     var fechaActual = new Date().toLocaleString();
-    // const totalBetaFormatted = this.totalBeta.toFixed(2);
+    const totalBetaFormatted = this.totalBeta.toFixed(2);
     const probabilidadIncumplimiento = this.respuestaData.resultado.totalizadores.probabilidadIncumplimiento;
     const probabilidadEnPorcentaje = (probabilidadIncumplimiento).toFixed(2) + '%';
     const reservaPerdida = this.respuestaData.resultado.totalizadores.reservaPerdida;
@@ -521,11 +525,11 @@ export class HomeComponent implements OnInit {
               ['3. Municipio del crédito',                                  {text: this.getValueSelect('indicador_c', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_c', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_c', 'puntaje'), alignment: 'center'}],
               ['4. Total de créditos con los que cuenta el intermediario',  {text: this.getValueSelect('indicador_d', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_d', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_d', 'puntaje'), alignment: 'center'}],
               ['5. Días de atraso que presenta en buró el acreditado',      {text: this.getValueSelect('indicador_e', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_e', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_e', 'puntaje'), alignment: 'center'}],
-              ['6. Monto de ventas',                                        {text: this.convertirMoneda('indicador_f'), alignment: 'center'},  {text: this.getValueInput('indicador_f')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_f')?.puntaje, alignment: 'center'}],
+              ['6. Monto de ventas',                                        {text: this.convertirIndicador('indicador_f'), alignment: 'center'},  {text: this.getValueInput('indicador_f')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_f')?.puntaje, alignment: 'center'}],
               ['7. Antigüedad de la empresa (en meses)',                    {text: this.getValueInput('indicador_g')?.name, alignment: 'center'},  {text: this.getValueInput('indicador_g')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_g')?.puntaje, alignment: 'center'}],
               ['8. Margen Financiero',                                      {text: this.convertirPorcentaje('indicador_h'), alignment: 'center'},  {text: this.getValueInput('indicador_h')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_h')?.puntaje, alignment: 'center'}],
               ['9. ROA',                                                    {text: this.convertirPorcentaje('indicador_i'), alignment: 'center'},  {text:this.getValueInput('indicador_i')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_i')?.puntaje, alignment: 'center'}],
-              [{text: 'Total', alignment: 'center', bold: true}, '',        {text: this.totalBeta, alignment: 'center', bold: true},           {text: this.respuestaData.resultado.totalizadores.puntuaje, alignment: 'center', bold: true}],
+              [{text: 'Total', alignment: 'center', bold: true}, '',        {text: totalBetaFormatted, alignment: 'center', bold: true},           {text: this.respuestaData.resultado.totalizadores.puntuaje, alignment: 'center', bold: true}],
             ]
           },
           layout:{
@@ -550,7 +554,7 @@ export class HomeComponent implements OnInit {
                   [{text: 'Puntaje'},                        { text: this.respuestaData.resultado.totalizadores.puntuaje, alignment: 'center', bold: true }],
                   [{text: 'Severidad de la Pérdida'},        { text: this.convertirPorcentaje('indicador_k'), alignment: 'center', bold: true }],
                   [{text: '% Reservas'},                     { text: reservaPorcentaje, alignment: 'center', bold: true }],
-                  [{text: 'Reserva preventiva'},             { text: this.calculatorForm.get('monto')?.value*this.respuestaData.resultado.totalizadores.reservaPerdida, alignment: 'center', bold: true }],
+                  [{text: 'Reserva preventiva'},             { text: this.reservaP, alignment: 'center', bold: true }],
                   [{text: 'Tipo de crédito'},                { text: this.getValueSelect('indicador_l', 'name'), alignment: 'center', bold: true }],
                   [{text: 'Calificación'},                   { text: this.respuestaData.resultado.totalizadores.calificacion, alignment: 'center', bold: true }]
                 ]
