@@ -500,17 +500,6 @@ export class HomeComponent implements OnInit {
           },
           layout: 'noBorders'
         },
-        // {
-        //   table:{
-        //     style: 'table',
-        //     headerRows: 1,
-        //     body:[
-        //       ['Monto de crédito solicitado:', { text: this.montoEnMoneda}],
-        //     ]
-        //   },
-        //   layout: 'noBorders'
-        // },
-        
         { text: '\n'},
         
         {
