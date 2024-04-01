@@ -4,9 +4,9 @@
     <img src="../../../assets/img/UCG-01-1.jpg" class="img-fluid rounded float-start logo">
     <img src="../../../assets/img/ifnb-01.jpeg" class="img-fluid rounded float-end logo">
     <br>
-    <h1 class="animate__animated animate__jackInTheBox animate__slow h1-margin"><strong>Herramienta Paramétrica</strong></h1>
-    <h1 class="animate__animated animate__jackInTheBox animate__slow"><strong>Unión de Crédito General</strong></h1>
-    <h3><strong>Calculadora PI</strong></h3>
+    <h1 class="animate__animated animate__jackInTheBox animate__slow h1-margin"><strong>Calculadora de Probabilidad</strong></h1>
+    <h1 class="animate__animated animate__jackInTheBox animate__slow"><strong>de Incumplimiento</strong></h1>
+    <!-- <h3><strong>Calculadora PI</strong></h3> -->
     <div class="d-flex rowContainer">
       <button type="button" class="btn btnLimpiar ms-auto btn-sm" (click)="ocultarCard()"><i class="bi bi-eraser"></i> Limpiar</button>
     </div>
@@ -613,8 +613,8 @@
                   </tr>
                   <tr>
                     <td class="center"><strong>Total</strong></td>
-                    <td class="center">{{ totalBeta | number:'1.2-2' }}</td>
-                    <td class="center">{{ totalPuntaje }}</td>
+                    <td class="center">{{totalBeta}}</td>
+                    <td class="center">{{respuestaData.resultado.totalizadores.puntuaje}}</td>
                   </tr>
                 </tbody>
               </table>

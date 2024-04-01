@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
   indicador_k!: indicadores[];
   indicador_l!: indicadores[];
   totalBeta: number = 0;
-  totalPuntaje: number = 0;
+  // totalPuntaje: number = 0;
   prospectoForm!: FormGroup;
   requerido = false;
   rango: string = '';
@@ -241,6 +241,14 @@ export class HomeComponent implements OnInit {
     return indicadorData && indicadorData.length > 0 ? { name: indicadorData[0].name, beta: indicadorData[0].beta, puntaje: indicadorData[0].puntaje } : undefined;
   }
 
+  sumarBetas() {
+    if (this.respuestaData && this.respuestaData.resultado && this.respuestaData.resultado.items) {
+      this.totalBeta = this.respuestaData.resultado.items.reduce((total, item) => total + item.beta, 0);
+    } else {
+      console.error('Error al sumar beta');
+    }
+  }
+
   // getBeta(indicador: string): number | undefined {
   //   const item = this.respuestaData.resultado.items.find(item => item.attribute === indicador);
   //   return item ? item.beta : undefined;
@@ -272,7 +280,6 @@ export class HomeComponent implements OnInit {
       this.mostrarDetalles = true;
       this.respuesta(body);
       console.log(this.calculatorForm);
-      
     } else {
       this.alert = true;
       setTimeout(() => {
@@ -281,17 +288,6 @@ export class HomeComponent implements OnInit {
     }
   }
   private respuesta(body: DatosFormulario){
-    this.totalBeta = 0;
-    this.totalPuntaje = 0;
-    for (const controlName in this.calculatorForm.controls) {
-      if (this.calculatorForm.controls.hasOwnProperty(controlName)) {
-        const control = this.calculatorForm.controls[controlName];
-        const beta = Number(control.value['beta']);
-        const puntaje = Number(control.value['puntaje']);
-        if (!isNaN(beta)) this.totalBeta += beta;
-        if (!isNaN(puntaje)) this.totalPuntaje += puntaje;
-      }
-    }
     this.data.getData(body).subscribe({
       next: (rsp) => {
         this.local.isloader = false;
@@ -299,10 +295,10 @@ export class HomeComponent implements OnInit {
         console.log(rsp);
         this.respuestaData = rsp;
         this.calificacion();
+        this.sumarBetas();
+        this.convertirMonto();
       }
     });
-    console.log(this.montoEnMoneda); 
-    console.log(this.calculatorForm.value.monto);
   }
 
   private calificacion() {
@@ -416,16 +412,11 @@ export class HomeComponent implements OnInit {
 
   convertirMonto(){
     const monto = this.calculatorForm.value.monto;
-
-    this.montoEnMoneda = monto.toLocaleString('en-US', {
+    this.montoEnMoneda = monto.toLocaleString('es-MX', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'MXN',
     });
-
-    // Luego puedes usar this.montoFormateado en tu generador de PDFs con pdfmake
-    console.log(this.montoEnMoneda); 
-    console.log(this.calculatorForm.value.monto);
-    
+    console.log(this.montoEnMoneda);
   }
 
 
@@ -445,7 +436,7 @@ export class HomeComponent implements OnInit {
   
   generadorPDF(){
     var fechaActual = new Date().toLocaleString();
-    const totalBetaFormatted = this.totalBeta.toFixed(2);
+    // const totalBetaFormatted = this.totalBeta.toFixed(2);
     const probabilidadIncumplimiento = this.respuestaData.resultado.totalizadores.probabilidadIncumplimiento;
     const probabilidadEnPorcentaje = (probabilidadIncumplimiento).toFixed(2) + '%';
     const reservaPerdida = this.respuestaData.resultado.totalizadores.reservaPerdida;
@@ -465,7 +456,7 @@ export class HomeComponent implements OnInit {
       content: [
         { text: 'Fecha: ' + fechaActual, alignment: 'left', fontSize: 10 },
         { text: '\n', margin: [0, 20, 0, 0] },
-        { text: 'Herramienta Paramétrica Unión de Crédito General\n', fontSize: 20, color: '#402b57', alignment: 'center' },
+        { text: 'Calculadora de Probabilidad de Incumplimiento\n', fontSize: 20, color: '#402b57', alignment: 'center' },
         { text: '\n', margin: [0, 10, 0, 0] },
 
         {
@@ -510,7 +501,7 @@ export class HomeComponent implements OnInit {
             style: 'table',
             headerRows: 1,
             body:[
-              ['Monto de crédito solicitado:', { text: this.calculatorForm.value.monto}],
+              ['Monto de crédito solicitado:', { text: this.montoEnMoneda}],
             ]
           },
           layout: 'noBorders'
@@ -534,7 +525,7 @@ export class HomeComponent implements OnInit {
               ['7. Antigüedad de la empresa (en meses)',                    {text: this.getValueInput('indicador_g')?.name, alignment: 'center'},  {text: this.getValueInput('indicador_g')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_g')?.puntaje, alignment: 'center'}],
               ['8. Margen Financiero',                                      {text: this.convertirPorcentaje('indicador_h'), alignment: 'center'},  {text: this.getValueInput('indicador_h')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_h')?.puntaje, alignment: 'center'}],
               ['9. ROA',                                                    {text: this.convertirPorcentaje('indicador_i'), alignment: 'center'},  {text:this.getValueInput('indicador_i')?.beta, alignment: 'center'}, {text: this.getValueInput('indicador_i')?.puntaje, alignment: 'center'}],
-              [{text: 'Total', alignment: 'center', bold: true}, '',        {text: totalBetaFormatted, alignment: 'center', bold: true},           {text: this.totalPuntaje, alignment: 'center', bold: true}],
+              [{text: 'Total', alignment: 'center', bold: true}, '',        {text: this.totalBeta, alignment: 'center', bold: true},           {text: this.respuestaData.resultado.totalizadores.puntuaje, alignment: 'center', bold: true}],
             ]
           },
           layout:{
