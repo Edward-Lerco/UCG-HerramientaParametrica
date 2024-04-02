@@ -143,14 +143,14 @@ export class HomeComponent implements OnInit {
     });
 
     this.calculatorForm.get('tipoPersona')!.valueChanges.subscribe(value => {
-      if (value === 'Física') {
+      if (value === 'FÍSICA') {
         this.calculatorForm.controls['nombreProspecto'].setValidators([Validators.required]);
         this.calculatorForm.controls['apellido1Prospecto'].setValidators([Validators.required]);
         this.calculatorForm.controls['apellido2Prospecto'].setValidators([Validators.required]);
 
         this.calculatorForm.controls['razonSocial'].clearValidators();
         this.calculatorForm.controls['razonSocial'].updateValueAndValidity();
-      } else if (value === 'Moral') {
+      } else if (value === 'MORAL') {
         this.calculatorForm.controls['razonSocial'].setValidators([Validators.required]);
   
         this.calculatorForm.controls['nombreProspecto'].clearValidators();
