@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { LocalService } from '../../services/local.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -105,15 +105,22 @@ export class HomeComponent implements OnInit {
     type: ''
   }
 
+  tipo: any[] = [
+    { label: 'Persona Física', tipoPersona: 'Física' },
+    { label: 'Persona Moral', tipoPersona: 'Moral' }
+  ];
+
   constructor(
     private data:  DataService, 
     private local: LocalService,
     private formBuilder: FormBuilder,
   ){
     this.calculatorForm = this.formBuilder.group({
-      nombreProspecto:    [null, Validators.required],
-      apellido1Prospecto: [null, Validators.required],
-      apellido2Prospecto: [null, Validators.required],
+      tipoPersona: new FormControl('', Validators.required),
+      razonSocial:        [null],
+      nombreProspecto:    [null],
+      apellido1Prospecto: [null],
+      apellido2Prospecto: [null],
       emailProspecto:     [null, [Validators.required, Validators.email]],
       telProspecto:       [null, Validators.required],
       direccionProspecto: [null, Validators.required],
@@ -134,6 +141,36 @@ export class HomeComponent implements OnInit {
       indicador_k: [null, Validators.required],
       indicador_l: [null, Validators.required]
     });
+
+    this.calculatorForm.get('tipoPersona')!.valueChanges.subscribe(value => {
+      if (value === 'Física') {
+        this.calculatorForm.controls['nombreProspecto'].setValidators([Validators.required]);
+        this.calculatorForm.controls['apellido1Prospecto'].setValidators([Validators.required]);
+        this.calculatorForm.controls['apellido2Prospecto'].setValidators([Validators.required]);
+
+        this.calculatorForm.controls['razonSocial'].clearValidators();
+        this.calculatorForm.controls['razonSocial'].updateValueAndValidity();
+      } else if (value === 'Moral') {
+        this.calculatorForm.controls['razonSocial'].setValidators([Validators.required]);
+  
+        this.calculatorForm.controls['nombreProspecto'].clearValidators();
+        this.calculatorForm.controls['apellido1Prospecto'].clearValidators();
+        this.calculatorForm.controls['apellido2Prospecto'].clearValidators();
+        this.calculatorForm.controls['nombreProspecto'].updateValueAndValidity();
+        this.calculatorForm.controls['apellido1Prospecto'].updateValueAndValidity();
+        this.calculatorForm.controls['apellido2Prospecto'].updateValueAndValidity();
+      }
+    });
+  }
+
+  uppercase(event: any) {
+    const nomEjecutivo = this.calculatorForm.get('nombreEjecutivo');
+    if (nomEjecutivo) {
+      const inputValue = (event.target as HTMLInputElement)?.value;
+      if (inputValue) {
+        nomEjecutivo.setValue(inputValue.toUpperCase());
+      }
+    }
   }
 
   ngOnInit() {
@@ -468,8 +505,8 @@ export class HomeComponent implements OnInit {
             style: 'table',
             headerRows: 1,
             body:[
-              [{ text: 'Ejecutivo de negocios', style: 'tableHeader2', colSpan: 4 },'','',''],
-              ['Nombre: ', { text: this.calculatorForm.get('nombreEjecutivo')?.value}, { text: this.calculatorForm.get('apellido1Ejecutivo')?.value}, { text: this.calculatorForm.get('apellido2Ejecutivo')?.value}]
+              [{ text: 'Ejecutivo de negocios', style: 'tableHeader2', colSpan: 4 },'','','',''],
+              ['Nombre:','', { text: this.calculatorForm.get('nombreEjecutivo')?.value}, { text: this.calculatorForm.get('apellido1Ejecutivo')?.value}, { text: this.calculatorForm.get('apellido2Ejecutivo')?.value}]
             ]
           },
           layout: 'noBorders'
@@ -477,13 +514,24 @@ export class HomeComponent implements OnInit {
 
         { text: '\n'},
 
+
         {
           table:{
             style: 'table',
             headerRows: 1,
             body:[
-              [{ text: 'Prospecto', style: 'tableHeader2', colSpan: 4},'', '', ''],
-              ['Nombre: ', { text: this.calculatorForm.get('nombreProspecto')?.value}, { text: this.calculatorForm.get('apellido1Prospecto')?.value}, { text: this.calculatorForm.get('apellido2Prospecto')?.value}],
+              [{ text: 'Prospecto', style: 'tableHeader2', colSpan: 2} ,''],
+              ['Tipo de persona: ', { text: this.calculatorForm.get('tipoPersona')?.value}],
+            ]
+          },
+          layout: 'noBorders'
+        },
+        {
+          table:{
+            style: 'table',
+            headerRows: 1,
+            body:[
+              ['Nombre:', '', {text: this.calculatorForm.get('nombreProspecto')?.value||this.calculatorForm.get('razonSocial')?.value}, {text: this.calculatorForm.get('apellido1Prospecto')?.value}, {text: this.calculatorForm.get('apellido2Prospecto')?.value}],
             ]
           },
           layout: 'noBorders'
@@ -508,7 +556,7 @@ export class HomeComponent implements OnInit {
             widths: ['auto', 'auto', 65, 'auto'],
             headerRows: 1,
             body: [
-              [{text: 'Variable', style: 'tableHeader'}, {text: 'Atributo', style: 'tableHeader'}, {text: 'BETA', style: 'tableHeader'}, {text: 'PUNTAJE', style: 'tableHeader'}],
+              [{text: 'Variable', style: 'tableHeader'}, {text: 'Atributo', style: 'tableHeader'}, {text: 'Beta', style: 'tableHeader'}, {text: 'Puntaje', style: 'tableHeader'}],
               ['1. Indique la industria del crédito',                       {text: this.getValueSelect('indicador_a', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_a', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_a', 'puntaje'), alignment: 'center'}],
               ['2. ¿Es actividad vulnerable?',                              {text: this.getValueSelect('indicador_b', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_b', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_b', 'puntaje'), alignment: 'center'}],
               ['3. Municipio del crédito',                                  {text: this.getValueSelect('indicador_c', 'name'), alignment: 'center'},  {text: this.getValueSelect('indicador_c', 'beta'), alignment: 'center'}, {text: this.getValueSelect('indicador_c', 'puntaje'), alignment: 'center'}],

@@ -14,86 +14,12 @@
       <div class="row rowContainer">
 
         <div>
-          <label class="color1 colMargen"><strong>Prospecto:</strong></label>
-        </div>
-
-        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen">
-          <span class="p-float-label">
-            <input pInputText formControlName="nombreProspecto"/>
-            <label>Nombre</label>
-          </span>
-          <span *ngIf="calculatorForm.get('nombreProspecto')?.touched && calculatorForm.get('nombreProspecto')?.invalid || requerido && calculatorForm.get('nombreProspecto')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
-
-        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen">
-          <span class="p-float-label">
-            <input pInputText formControlName="apellido1Prospecto"/>
-            <label>Apellido paterno</label>
-          </span>
-          <span *ngIf="calculatorForm.get('apellido1Prospecto')?.touched && calculatorForm.get('apellido1Prospecto')?.invalid || requerido && calculatorForm.get('apellido1Prospecto')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
-
-        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen">
-          <span class="p-float-label">
-            <input pInputText formControlName="apellido2Prospecto"/>
-            <label>Apellido materno</label>
-          </span>
-          <span *ngIf="calculatorForm.get('apellido2Prospecto')?.touched && calculatorForm.get('apellido2Prospecto')?.invalid || requerido && calculatorForm.get('apellido2Prospecto')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
-        
-        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen">
-          <span class="p-float-label">
-            <input pInputText formControlName="emailProspecto"/>
-            <label>Email</label>
-          </span>
-          <span *ngIf="calculatorForm.get('emailProspecto')?.touched && calculatorForm.get('emailProspecto')?.invalid || requerido && calculatorForm.get('emailProspecto')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
-
-        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen">
-          <span class="p-float-label">
-            <p-inputMask mask="(999) 999-9999" id="ssn_input" formControlName="telProspecto"></p-inputMask>
-            <label htmlFor="ssn_input">Teléfono</label>
-          </span>
-          <span *ngIf="calculatorForm.get('telProspecto')?.touched && calculatorForm.get('telProspecto')?.invalid || requerido && calculatorForm.get('telProspecto')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
-
-        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen">
-          <span class="p-float-label">
-            <input pInputText formControlName="direccionProspecto"/>
-            <label>Dirección</label>
-          </span>
-          <span *ngIf="calculatorForm.get('direccionProspecto')?.touched && calculatorForm.get('direccionProspecto')?.invalid || requerido && calculatorForm.get('direccionProspecto')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
-
-        <div class="col-12 col-xl-6 p-fluid colMargen">
-          <span class="p-float-label">
-            <p-inputNumber formControlName="monto" inputId="currency-us" mode="currency" currency="USD" locale="en-US"> </p-inputNumber>
-            <label>Monto de crédito solicitado</label>
-          </span>
-          <span *ngIf="calculatorForm.get('monto')?.touched && calculatorForm.get('monto')?.invalid || requerido && calculatorForm.get('monto')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
-        <hr>
-        <div>
           <label class="color1 colMargen"><strong>Ejecutivo de negocios:</strong></label>
         </div>
 
         <div class="col-12 col-md-4 p-fluid colMargen">
           <span class="p-float-label">
-            <input pInputText formControlName="nombreEjecutivo"/>
+            <input pInputText formControlName="nombreEjecutivo" (input)="uppercase($event)"/>
             <label>Nombre</label>
           </span>
           <span *ngIf="calculatorForm.get('nombreEjecutivo')?.touched && calculatorForm.get('nombreEjecutivo')?.invalid || requerido && calculatorForm.get('nombreEjecutivo')?.invalid" class="input_error">
@@ -117,6 +43,102 @@
             <label>Apellido materno</label>
           </span>
           <span *ngIf="calculatorForm.get('apellido2Ejecutivo')?.touched && calculatorForm.get('apellido2Ejecutivo')?.invalid || requerido && calculatorForm.get('apellido2Ejecutivo')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+        <hr>
+      </div>
+
+      <div class="row rowContainer align-items-center">
+        <div class="col-12 col-md-6 col-xl-3 colMargen">
+          <label class="color1"><strong>Prospecto:</strong></label>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3 colMargen">
+          <p-selectButton [options]="tipo" formControlName="tipoPersona" optionLabel="label" optionValue="tipoPersona"></p-selectButton>
+          <span *ngIf="calculatorForm.get('tipoPersona')?.touched && calculatorForm.get('tipoPersona')?.invalid || requerido && calculatorForm.get('tipoPersona')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+      </div>
+
+      <div class="row rowContainer">
+
+        <div class="col-12 col-xl-9  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Moral'">
+          <span class="p-float-label">
+            <input pInputText formControlName="razonSocial"/>
+            <label>Razón social</label>
+          </span>
+          <span *ngIf="calculatorForm.get('razonSocial')?.touched && calculatorForm.get('razonSocial')?.invalid || requerido && calculatorForm.get('razonSocial')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
+          <span class="p-float-label">
+            <input pInputText formControlName="nombreProspecto"/>
+            <label>Nombre</label>
+          </span>
+          <span *ngIf="calculatorForm.get('nombreProspecto')?.touched && calculatorForm.get('nombreProspecto')?.invalid || requerido && calculatorForm.get('nombreProspecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
+          <span class="p-float-label">
+            <input pInputText formControlName="apellido1Prospecto"/>
+            <label>Apellido paterno</label>
+          </span>
+          <span *ngIf="calculatorForm.get('apellido1Prospecto')?.touched && calculatorForm.get('apellido1Prospecto')?.invalid || requerido && calculatorForm.get('apellido1Prospecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
+          <span class="p-float-label">
+            <input pInputText formControlName="apellido2Prospecto"/>
+            <label>Apellido materno</label>
+          </span>
+          <span *ngIf="calculatorForm.get('apellido2Prospecto')?.touched && calculatorForm.get('apellido2Prospecto')?.invalid || requerido && calculatorForm.get('apellido2Prospecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+        
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
+          <span class="p-float-label">
+            <input pInputText formControlName="emailProspecto"/>
+            <label>Email</label>
+          </span>
+          <span *ngIf="calculatorForm.get('emailProspecto')?.touched && calculatorForm.get('emailProspecto')?.invalid || requerido && calculatorForm.get('emailProspecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
+          <span class="p-float-label">
+            <p-inputMask mask="(999) 999-9999" id="ssn_input" formControlName="telProspecto"></p-inputMask>
+            <label htmlFor="ssn_input">Teléfono</label>
+          </span>
+          <span *ngIf="calculatorForm.get('telProspecto')?.touched && calculatorForm.get('telProspecto')?.invalid || requerido && calculatorForm.get('telProspecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
+          <span class="p-float-label">
+            <input pInputText formControlName="direccionProspecto"/>
+            <label>Dirección</label>
+          </span>
+          <span *ngIf="calculatorForm.get('direccionProspecto')?.touched && calculatorForm.get('direccionProspecto')?.invalid || requerido && calculatorForm.get('direccionProspecto')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-xl-6 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
+          <span class="p-float-label">
+            <p-inputNumber formControlName="monto" inputId="currency-us" mode="currency" currency="USD" locale="en-US"> </p-inputNumber>
+            <label>Monto de crédito solicitado</label>
+          </span>
+          <span *ngIf="calculatorForm.get('monto')?.touched && calculatorForm.get('monto')?.invalid || requerido && calculatorForm.get('monto')?.invalid" class="input_error">
             ** Campo requerido
           </span>
         </div>
