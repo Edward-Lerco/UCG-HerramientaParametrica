@@ -106,8 +106,8 @@ export class HomeComponent implements OnInit {
   }
 
   tipo: any[] = [
-    { label: 'Persona Física', tipoPersona: 'Física' },
-    { label: 'Persona Moral', tipoPersona: 'Moral' }
+    { label: 'Persona Física', tipoPersona: 'FÍSICA' },
+    { label: 'Persona Moral', tipoPersona: 'MORAL' }
   ];
 
   constructor(
@@ -163,12 +163,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  uppercase(event: any) {
-    const nomEjecutivo = this.calculatorForm.get('nombreEjecutivo');
-    if (nomEjecutivo) {
+  uppercase(event: any, formControlName: string) {
+    const control = this.calculatorForm.get(formControlName);
+    if (control) {
       const inputValue = (event.target as HTMLInputElement)?.value;
       if (inputValue) {
-        nomEjecutivo.setValue(inputValue.toUpperCase());
+        control.setValue(inputValue.toUpperCase());
       }
     }
   }

@@ -19,7 +19,7 @@
 
         <div class="col-12 col-md-4 p-fluid colMargen">
           <span class="p-float-label">
-            <input pInputText formControlName="nombreEjecutivo" (input)="uppercase($event)"/>
+            <input pInputText formControlName="nombreEjecutivo" (input)="uppercase($event, 'nombreEjecutivo')"/>
             <label>Nombre</label>
           </span>
           <span *ngIf="calculatorForm.get('nombreEjecutivo')?.touched && calculatorForm.get('nombreEjecutivo')?.invalid || requerido && calculatorForm.get('nombreEjecutivo')?.invalid" class="input_error">
@@ -29,7 +29,7 @@
 
         <div class="col-12 col-md-4 p-fluid colMargen">
           <span class="p-float-label">
-            <input pInputText formControlName="apellido1Ejecutivo"/>
+            <input pInputText formControlName="apellido1Ejecutivo" (input)="uppercase($event, 'apellido1Ejecutivo')"/>
             <label>Apellido paterno</label>
           </span>
           <span *ngIf="calculatorForm.get('apellido1Ejecutivo')?.touched && calculatorForm.get('apellido1Ejecutivo')?.invalid || requerido && calculatorForm.get('apellido1Ejecutivo')?.invalid" class="input_error">
@@ -39,7 +39,7 @@
 
         <div class="col-12 col-md-4 p-fluid colMargen">
           <span class="p-float-label">
-            <input pInputText formControlName="apellido2Ejecutivo"/>
+            <input pInputText formControlName="apellido2Ejecutivo" (input)="uppercase($event, 'apellido2Ejecutivo')"/>
             <label>Apellido materno</label>
           </span>
           <span *ngIf="calculatorForm.get('apellido2Ejecutivo')?.touched && calculatorForm.get('apellido2Ejecutivo')?.invalid || requerido && calculatorForm.get('apellido2Ejecutivo')?.invalid" class="input_error">
@@ -65,7 +65,7 @@
 
         <div class="col-12 col-xl-9  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Moral'">
           <span class="p-float-label">
-            <input pInputText formControlName="razonSocial"/>
+            <input pInputText formControlName="razonSocial" (input)="uppercase($event, 'razonSocial')"/>
             <label>Razón social</label>
           </span>
           <span *ngIf="calculatorForm.get('razonSocial')?.touched && calculatorForm.get('razonSocial')?.invalid || requerido && calculatorForm.get('razonSocial')?.invalid" class="input_error">
@@ -75,7 +75,7 @@
 
         <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
           <span class="p-float-label">
-            <input pInputText formControlName="nombreProspecto"/>
+            <input pInputText formControlName="nombreProspecto" (input)="uppercase($event, 'nombreProspecto')"/>
             <label>Nombre</label>
           </span>
           <span *ngIf="calculatorForm.get('nombreProspecto')?.touched && calculatorForm.get('nombreProspecto')?.invalid || requerido && calculatorForm.get('nombreProspecto')?.invalid" class="input_error">
@@ -85,7 +85,7 @@
 
         <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
           <span class="p-float-label">
-            <input pInputText formControlName="apellido1Prospecto"/>
+            <input pInputText formControlName="apellido1Prospecto" (input)="uppercase($event, 'apellido1Prospecto')"/>
             <label>Apellido paterno</label>
           </span>
           <span *ngIf="calculatorForm.get('apellido1Prospecto')?.touched && calculatorForm.get('apellido1Prospecto')?.invalid || requerido && calculatorForm.get('apellido1Prospecto')?.invalid" class="input_error">
@@ -95,7 +95,7 @@
 
         <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
           <span class="p-float-label">
-            <input pInputText formControlName="apellido2Prospecto"/>
+            <input pInputText formControlName="apellido2Prospecto" (input)="uppercase($event, 'apellido2Prospecto')"/>
             <label>Apellido materno</label>
           </span>
           <span *ngIf="calculatorForm.get('apellido2Prospecto')?.touched && calculatorForm.get('apellido2Prospecto')?.invalid || requerido && calculatorForm.get('apellido2Prospecto')?.invalid" class="input_error">
@@ -105,7 +105,7 @@
         
         <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
           <span class="p-float-label">
-            <input pInputText formControlName="emailProspecto"/>
+            <input pInputText formControlName="emailProspecto" (input)="uppercase($event, 'emailProspecto')"/>
             <label>Email</label>
           </span>
           <span *ngIf="calculatorForm.get('emailProspecto')?.touched && calculatorForm.get('emailProspecto')?.invalid || requerido && calculatorForm.get('emailProspecto')?.invalid" class="input_error">
@@ -125,7 +125,7 @@
 
         <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
           <span class="p-float-label">
-            <input pInputText formControlName="direccionProspecto"/>
+            <input pInputText formControlName="direccionProspecto" (input)="uppercase($event, 'direccionProspecto')"/>
             <label>Dirección</label>
           </span>
           <span *ngIf="calculatorForm.get('direccionProspecto')?.touched && calculatorForm.get('direccionProspecto')?.invalid || requerido && calculatorForm.get('direccionProspecto')?.invalid" class="input_error">
