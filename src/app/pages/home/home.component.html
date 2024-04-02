@@ -63,7 +63,7 @@
 
       <div class="row rowContainer">
 
-        <div class="col-12 col-xl-9  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Moral'">
+        <div class="col-12 col-xl-9  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'MORAL'">
           <span class="p-float-label">
             <input pInputText formControlName="razonSocial" (input)="uppercase($event, 'razonSocial')"/>
             <label>Razón social</label>
@@ -73,7 +73,7 @@
           </span>
         </div>
 
-        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'FÍSICA'">
           <span class="p-float-label">
             <input pInputText formControlName="nombreProspecto" (input)="uppercase($event, 'nombreProspecto')"/>
             <label>Nombre</label>
@@ -83,7 +83,7 @@
           </span>
         </div>
 
-        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'FÍSICA'">
           <span class="p-float-label">
             <input pInputText formControlName="apellido1Prospecto" (input)="uppercase($event, 'apellido1Prospecto')"/>
             <label>Apellido paterno</label>
@@ -93,7 +93,7 @@
           </span>
         </div>
 
-        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física'">
+        <div class="col-12 col-md-4 col-xl-3  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'FÍSICA'">
           <span class="p-float-label">
             <input pInputText formControlName="apellido2Prospecto" (input)="uppercase($event, 'apellido2Prospecto')"/>
             <label>Apellido materno</label>
@@ -103,7 +103,7 @@
           </span>
         </div>
         
-        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'FÍSICA' ||  calculatorForm.get('tipoPersona')?.value === 'MORAL'">
           <span class="p-float-label">
             <input pInputText formControlName="emailProspecto" (input)="uppercase($event, 'emailProspecto')"/>
             <label>Email</label>
@@ -113,7 +113,7 @@
           </span>
         </div>
 
-        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'FÍSICA' ||  calculatorForm.get('tipoPersona')?.value === 'MORAL'">
           <span class="p-float-label">
             <p-inputMask mask="(999) 999-9999" id="ssn_input" formControlName="telProspecto"></p-inputMask>
             <label htmlFor="ssn_input">Teléfono</label>
@@ -123,7 +123,7 @@
           </span>
         </div>
 
-        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'FÍSICA' ||  calculatorForm.get('tipoPersona')?.value === 'MORAL'">
           <span class="p-float-label">
             <input pInputText formControlName="direccionProspecto" (input)="uppercase($event, 'direccionProspecto')"/>
             <label>Dirección</label>
@@ -133,7 +133,7 @@
           </span>
         </div>
 
-        <div class="col-12 col-xl-6 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'Física' ||  calculatorForm.get('tipoPersona')?.value === 'Moral'">
+        <div class="col-12 col-xl-6 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'FÍSICA' ||  calculatorForm.get('tipoPersona')?.value === 'MORAL'">
           <span class="p-float-label">
             <p-inputNumber formControlName="monto" inputId="currency-us" mode="currency" currency="USD" locale="en-US"> </p-inputNumber>
             <label>Monto de crédito solicitado</label>
