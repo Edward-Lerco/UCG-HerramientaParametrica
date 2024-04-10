@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { LocalService } from '../../services/local.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -58,12 +60,18 @@ interface indicadores {
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers: [MessageService]
 })
 
 export class HomeComponent implements OnInit {
   @ViewChild('bottom') bottom!: ElementRef;
 
+  user={
+    nombre:'',
+    apellidos:''
+  };
+  tokenUser:any;
   calculatorForm!: FormGroup
   mostrarDetalles: boolean = false;
   alert: boolean = false;
@@ -81,13 +89,12 @@ export class HomeComponent implements OnInit {
   indicador_k!: indicadores[];
   indicador_l!: indicadores[];
   totalBeta: number = 0;
-  prospectoForm!: FormGroup;
   requerido = false;
   rango: string = '';
   montoEnMoneda: string = '';
   reservaP: string = ''
   resultadoData: Item[] = [];
-
+  
   respuestaData: Respuesta = {
     code: 0,
     name: '',
@@ -110,10 +117,13 @@ export class HomeComponent implements OnInit {
     private data:  DataService, 
     private local: LocalService,
     private formBuilder: FormBuilder,
+    private router: Router,
+    private messageService: MessageService,
   ){
     this.calculatorForm = this.formBuilder.group({
       tipoPersona: new FormControl('', Validators.required),
       razonSocial:        [null],
+      nombreContacto:     [null],
       nombreProspecto:    [null],
       apellido1Prospecto: [null],
       apellido2Prospecto: [null],
@@ -121,9 +131,6 @@ export class HomeComponent implements OnInit {
       telProspecto:       [null, Validators.required],
       direccionProspecto: [null, Validators.required],
       monto:              [null, Validators.required],
-      nombreEjecutivo:    [null, Validators.required],
-      apellido1Ejecutivo: [null, Validators.required],
-      apellido2Ejecutivo: [null, Validators.required],
 
       indicador_a: [null, Validators.required],
       indicador_b: [null, Validators.required],
@@ -151,10 +158,15 @@ export class HomeComponent implements OnInit {
         this.calculatorForm.controls['apellido2Prospecto'].updateValueAndValidity();
 
         this.calculatorForm.controls['razonSocial'].setValidators([Validators.required]);
+        this.calculatorForm.controls['nombreContacto'].setValidators([Validators.required]);
       } else if (value === 'FÍSICA') {
         this.calculatorForm.controls['razonSocial'].clearValidators();
         this.calculatorForm.controls['razonSocial'].reset();
         this.calculatorForm.controls['razonSocial'].updateValueAndValidity();
+
+        this.calculatorForm.controls['nombreContacto'].clearValidators();
+        this.calculatorForm.controls['nombreContacto'].reset();
+        this.calculatorForm.controls['nombreContacto'].updateValueAndValidity();
 
         this.calculatorForm.controls['nombreProspecto'].setValidators([Validators.required]);
         this.calculatorForm.controls['apellido1Prospecto'].setValidators([Validators.required]);
@@ -174,6 +186,25 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    const userData:any = localStorage.getItem('user');
+    // console.log(userData);
+    if (!userData) {
+      this.router.navigate(['/login']);
+    }else{
+      try {
+        const datos: any = JSON.parse(userData);
+        this.tokenUser = datos['token'];  
+        this.user = datos;
+        this.local.isloader = false;
+        // console.log(this.user);
+        this.user.nombre = this.user.nombre.toUpperCase();
+        this.user.apellidos = this.user.apellidos.toUpperCase();
+      } catch (error) {
+        console.error('Error al analizar los datos del usuario:', error);
+        this.router.navigate(['/login']);
+      }
+    }
+    
     this.indicador_a = [
       { name: 'Construcción',             code: '10',          beta: '1.85',  puntaje: '36',  icon:'assets/icons/construccion.png'},
       { name: 'Textil',                   code: '20',          beta: '-0.56', puntaje: '105', icon:'assets/icons/textil.png'},
@@ -322,7 +353,7 @@ export class HomeComponent implements OnInit {
       this.alert = true;
       setTimeout(() => {
         this.bottom.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      this.delayTime});
+      this.delayTime});                     
     }
   }
   private respuesta(body: DatosFormulario){
@@ -474,8 +505,24 @@ export class HomeComponent implements OnInit {
         return '';
     }
   }
+
+  cerrarSesion(){
+    // localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  }
+
+  enviarPDF(pdfDocGenerator: string){
+    let body = {token: this.tokenUser, file_base64: pdfDocGenerator};
+    this.local.isloader = true;
+    this.data.pdf(body).subscribe({next: (respuesta) => {
+      console.log(respuesta);
+      this.local.isloader = false;
+      this.messageService.add({ severity: 'success', summary: 'Se envio correctamente el documento'});
+    }})
+  }
   
-  generadorPDF(){
+  generadorPDF(generar: number ){
     this.requerido = true;
     if (this.calculatorForm.valid){
       var fechaActual = new Date().toLocaleString();
@@ -507,8 +554,8 @@ export class HomeComponent implements OnInit {
               style: 'table',
               headerRows: 1,
               body:[
-                [{ text: 'Ejecutivo de negocios', style: 'tableHeader2', colSpan: 4 },'','','',''],
-                ['Nombre:','', { text: this.calculatorForm.get('nombreEjecutivo')?.value}, { text: this.calculatorForm.get('apellido1Ejecutivo')?.value}, { text: this.calculatorForm.get('apellido2Ejecutivo')?.value}]
+                [{ text: 'Ejecutivo de credito', style: 'tableHeader2', colSpan: 3 },'','',''],
+                ['Nombre:','', {text: this.user.nombre}, {text: this.user.apellidos}]
               ]
             },
             layout: 'noBorders'
@@ -533,7 +580,7 @@ export class HomeComponent implements OnInit {
               style: 'table',
               headerRows: 1,
               body:[
-                ['Nombre:', '', {text: this.calculatorForm.get('nombreProspecto')?.value||this.calculatorForm.get('razonSocial')?.value}, {text: this.calculatorForm.get('apellido1Prospecto')?.value}, {text: this.calculatorForm.get('apellido2Prospecto')?.value}],
+                ['Nombre:', '', {text: this.calculatorForm.get('nombreProspecto')?.value||this.calculatorForm.get('razonSocial')?.value}, {text: this.calculatorForm.get('apellido1Prospecto')?.value || this.calculatorForm.get('nombreContacto')?.value}, {text: this.calculatorForm.get('apellido2Prospecto')?.value}],
               ]
             },
             layout: 'noBorders'
@@ -665,8 +712,14 @@ export class HomeComponent implements OnInit {
           }
         },
       };
-      // pdfMake.createPdf(pdf).download('Evaluación.pdf');
-      pdfMake.createPdf(pdf).open();
+      if(generar == 10){
+        pdfMake.createPdf(pdf).open();
+      }else{
+        let pdfDocGenerator = pdfMake.createPdf(pdf);
+        pdfDocGenerator.getBase64((data) => {
+          this.enviarPDF(data);
+        });
+      }
     }else {
       this.alert = true;
       setTimeout(() => {

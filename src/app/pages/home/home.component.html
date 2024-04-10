@@ -8,44 +8,22 @@
     <h1 class="animate__animated animate__jackInTheBox animate__slow"><strong>de Incumplimiento</strong></h1>
     <div class="d-flex rowContainer">
       <button type="button" class="btn btnLimpiar ms-auto btn-sm" (click)="ocultarCard()"><i class="bi bi-eraser"></i> Limpiar</button>
+      <button class="boton-style1 left btn-sm" (click)="cerrarSesion()">
+        <i class="bi bi-box-arrow-left"></i>
+      </button>
     </div>
     <form [formGroup]="calculatorForm" (ngSubmit)="btnEvaluar()">
 
       <div class="row rowContainer">
 
         <div>
-          <label class="color1 colMargen"><strong>Ejecutivo de negocios:</strong></label>
+          <label class="color1 colMargen"><strong>Ejecutivo de credito:</strong></label>
         </div>
 
-        <div class="col-12 col-md-4 p-fluid colMargen">
-          <span class="p-float-label">
-            <input pInputText formControlName="nombreEjecutivo" (input)="uppercase($event, 'nombreEjecutivo')"/>
-            <label>Nombre</label>
-          </span>
-          <span *ngIf="calculatorForm.get('nombreEjecutivo')?.touched && calculatorForm.get('nombreEjecutivo')?.invalid || requerido && calculatorForm.get('nombreEjecutivo')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
+        <div>
+          <p>{{user.nombre}} {{user.apellidos}}</p>
         </div>
 
-        <div class="col-12 col-md-4 p-fluid colMargen">
-          <span class="p-float-label">
-            <input pInputText formControlName="apellido1Ejecutivo" (input)="uppercase($event, 'apellido1Ejecutivo')"/>
-            <label>Apellido paterno</label>
-          </span>
-          <span *ngIf="calculatorForm.get('apellido1Ejecutivo')?.touched && calculatorForm.get('apellido1Ejecutivo')?.invalid || requerido && calculatorForm.get('apellido1Ejecutivo')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
-
-        <div class="col-12 col-md-4 p-fluid colMargen">
-          <span class="p-float-label">
-            <input pInputText formControlName="apellido2Ejecutivo" (input)="uppercase($event, 'apellido2Ejecutivo')"/>
-            <label>Apellido materno</label>
-          </span>
-          <span *ngIf="calculatorForm.get('apellido2Ejecutivo')?.touched && calculatorForm.get('apellido2Ejecutivo')?.invalid || requerido && calculatorForm.get('apellido2Ejecutivo')?.invalid" class="input_error">
-            ** Campo requerido
-          </span>
-        </div>
         <hr>
       </div>
 
@@ -53,7 +31,7 @@
         <div class="col-12 col-md-6 col-xl-3 colMargen">
           <label class="color1"><strong>Prospecto:</strong></label>
         </div>
-        <div class="col-12 col-md-6 col-xl-3 colMargen">
+        <div class="col-12 col-md-6 col-xl-9 colMargen">
           <p-selectButton [options]="tipo" formControlName="tipoPersona" optionLabel="label" optionValue="tipoPersona"></p-selectButton>
           <span *ngIf="calculatorForm.get('tipoPersona')?.touched && calculatorForm.get('tipoPersona')?.invalid || requerido && calculatorForm.get('tipoPersona')?.invalid" class="input_error">
             ** Campo requerido
@@ -63,12 +41,22 @@
 
       <div class="row rowContainer">
 
-        <div class="col-12 col-xl-9  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'MORAL'">
+        <div class="col-12 col-md-8 col-xl-6  p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'MORAL'">
           <span class="p-float-label">
             <input pInputText formControlName="razonSocial" (input)="uppercase($event, 'razonSocial')"/>
             <label>Razón social</label>
           </span>
           <span *ngIf="calculatorForm.get('razonSocial')?.touched && calculatorForm.get('razonSocial')?.invalid || requerido && calculatorForm.get('razonSocial')?.invalid" class="input_error">
+            ** Campo requerido
+          </span>
+        </div>
+
+        <div class="col-12 col-md-4 col-xl-3 p-fluid colMargen" *ngIf="calculatorForm.get('tipoPersona')?.value === 'MORAL'">
+          <span class="p-float-label">
+            <input pInputText formControlName="nombreContacto" (input)="uppercase($event, 'nombreContacto')"/>
+            <label>Nombre de contacto </label>
+          </span>
+          <span *ngIf="calculatorForm.get('nombreContacto')?.touched && calculatorForm.get('nombreContacto')?.invalid || requerido && calculatorForm.get('nombreContacto')?.invalid" class="input_error">
             ** Campo requerido
           </span>
         </div>
@@ -692,17 +680,26 @@
           </div>
         </div>
 
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-4">
           <div class="card-body center">
+            <p-toast></p-toast>
             <button type="button" class=" boton-style2" (click)="showTabla()">
               Tabla de porcentaje de reservas preventivas
             </button>
           </div>
         </div>
 
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-4">
           <div class="card-body center">
-            <button type="submit" class="boton-style2" (click)="generadorPDF()">
+            <button type="submit" class="boton-style2" (click)="generadorPDF(20)">
+              Enviar Evaluación
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <div class="card-body center">
+            <button type="submit" class="boton-style2" (click)="generadorPDF(10)">
               Descargar Evaluación
             </button>
           </div>

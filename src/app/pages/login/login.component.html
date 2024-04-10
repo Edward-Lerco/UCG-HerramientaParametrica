@@ -8,22 +8,29 @@
       <img class="logo" src="/assets/img/UCG-03-1.jpg" alt="Logo">
     </div>
 
-    <form [formGroup]="loginform" (ngSubmit)="onLogin()">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       
-      <div class="margin">
+      <div class="margin p-fluid">
         <span class="p-float-label">
-          <input class="p-inputtext-sm input" id="username" type="email" name="email" formControlName="email" required pInputText />
+          <input id="username" type="email" name="email" formControlName="username" pInputText />
           <label htmlFor="username">Nombre de usuario</label>
+        </span>
+        <span *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid || requerido && loginForm.get('username')?.invalid" class="input_error">
+          ** Campo requerido
         </span>
       </div>
 
-      <div class="margin">
+      <div class="margin p-fluid">
         <span class="p-float-label">
-            <input class="p-inputtext-sm input" type="password" name="password" formControlName="password" required pInputText/>
+            <input type="password" name="password" formControlName="password" pInputText/>
             <label for="password">Contraseña</label>
         </span>
+        <span *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid || requerido && loginForm.get('password')?.invalid" class="input_error">
+          ** Campo requerido
+        </span>
       </div>
-        <button pRipple class="boton-style2 width" routerLink="/home" >Iniciar Sesión</button>
+        <p-toast></p-toast>
+        <button pRipple class="boton-style2 width" type="submit">Iniciar Sesión</button>
     </form>
   </div>
 </div>

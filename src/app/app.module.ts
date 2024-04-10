@@ -20,7 +20,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { SelectButtonModule } from 'primeng/selectbutton';
-
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     InputNumberModule,
     InputMaskModule,
     DropdownModule,
-    SelectButtonModule
+    SelectButtonModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]
