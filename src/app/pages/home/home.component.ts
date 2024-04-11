@@ -186,23 +186,17 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    const userData:any = localStorage.getItem('user');
-    // console.log(userData);
+    const userData: any = localStorage.getItem('user');
     if (!userData) {
       this.router.navigate(['/login']);
-    }else{
-      try {
-        const datos: any = JSON.parse(userData);
-        this.tokenUser = datos['token'];  
-        this.user = datos;
-        this.local.isloader = false;
-        // console.log(this.user);
-        this.user.nombre = this.user.nombre.toUpperCase();
-        this.user.apellidos = this.user.apellidos.toUpperCase();
-      } catch (error) {
-        console.error('Error al analizar los datos del usuario:', error);
-        this.router.navigate(['/login']);
-      }
+    } else {
+      this.local.isloader = false;
+      const datos: any = JSON.parse(userData);
+      this.tokenUser = datos['token'];  
+      this.user = datos;
+      // console.log(this.user);
+      this.user.nombre = this.user.nombre.toUpperCase();
+      this.user.apellidos = this.user.apellidos.toUpperCase();
     }
     
     this.indicador_a = [

@@ -8,7 +8,7 @@
       <img class="logo" src="/assets/img/UCG-03-1.jpg" alt="Logo">
     </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin($event)">
       
       <div class="margin p-fluid">
         <span class="p-float-label">

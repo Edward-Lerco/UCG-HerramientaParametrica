@@ -19,7 +19,6 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataService: DataService,
     private router: Router,
     private authService: AuthService,
     private messageService: MessageService,
@@ -31,26 +30,27 @@ export class LoginComponent {
     });
   }
 
-  onLogin() {
-    this.requerido = true
+  onLogin(event: Event) {
+    event.preventDefault(); // Evitar que la página se recargue
+    this.requerido = true;
     if (this.loginForm.valid) {
       this.local.isloader = true;
       const username = this.loginForm.value.username;
       const password = this.loginForm.value.password;
       this.authService.login(username, password).subscribe(
         (response) => {
-          this.loginResponse(response);
+          if (response && response.data) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+            this.router.navigate(['/home']);
+          } else {
+            this.local.isloader = false;
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Usuario y/o Contraseña Incorrecta' });
+          }
         },
         (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Usuario y/o Contraseña Incorrecta'});
+          console.error('Error al analizar los datos del usuario:', error);
         }
       );
     }
   }
-
-  private loginResponse(response: any){
-    localStorage.setItem('user', JSON.stringify(response.data));
-    this.router.navigate(['/home']);
-  }
-
 }
