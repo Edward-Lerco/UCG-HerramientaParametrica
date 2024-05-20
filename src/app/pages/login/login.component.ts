@@ -47,7 +47,8 @@ export class LoginComponent {
           }
         },
         (error) => {
-          console.error('Error al analizar los datos del usuario:', error);
+          this.local.isloader= false;
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Problemas de conexión, intenta mas tarde' });
         }
       );
     }
